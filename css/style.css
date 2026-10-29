@@ -1,0 +1,418 @@
+/* =========================================================
+   Resume Template - 画面用スタイル
+   色やフォントは :root の変数を変えるだけで全体に反映されます
+   ========================================================= */
+:root {
+  --color-bg: #f4f6fb;
+  --color-surface: #ffffff;
+  --color-text: #1f2430;
+  --color-muted: #6b7280;
+  --color-border: #e3e7ef;
+  --color-accent: #4f46e5;
+  --color-accent-soft: #eef0ff;
+  --color-accent-2: #06b6d4;
+  --radius: 14px;
+  --shadow: 0 8px 30px rgba(31, 36, 48, 0.06);
+  /* 外部フォントを読み込まず OS の日本語フォントを使う（高速＆外部への通信なし） */
+  --font: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP",
+    "Yu Gothic UI", "Yu Gothic", Meiryo, system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+a {
+  color: var(--color-accent);
+}
+
+/* ---------- ヘッダー（ナビ） ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+}
+.site-header__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.site-header__logo {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+}
+.site-header__logo span {
+  color: var(--color-accent);
+}
+.site-nav {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  flex-wrap: wrap;
+}
+.site-nav a {
+  padding: 6px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+}
+.btn-print {
+  border: 0;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font: inherit;
+  font-size: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  cursor: pointer;
+}
+
+/* ---------- レイアウト ---------- */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.page-title {
+  margin: 0 0 4px;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+}
+.page-meta {
+  margin: 0 0 24px;
+  color: var(--color-muted);
+  font-size: 13px;
+  text-align: right;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px 28px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 17px;
+}
+.section-title::before {
+  content: "";
+  width: 6px;
+  height: 20px;
+  border-radius: 3px;
+  background: linear-gradient(var(--color-accent), var(--color-accent-2));
+}
+
+/* ---------- トップページ ---------- */
+.hero {
+  text-align: center;
+  padding: 48px 20px 24px;
+}
+.hero__title {
+  font-size: clamp(28px, 6vw, 44px);
+  margin: 0 0 8px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero__lead {
+  color: var(--color-muted);
+  margin: 0;
+}
+.doc-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+.doc-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.doc-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 40px rgba(79, 70, 229, 0.15);
+}
+.doc-link__icon {
+  font-size: 32px;
+}
+.doc-link h2 {
+  margin: 8px 0 4px;
+  font-size: 20px;
+}
+.doc-link p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+.notice {
+  border-left: 4px solid #f59e0b;
+  background: #fffbeb;
+  padding: 14px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.notice strong {
+  color: #b45309;
+}
+
+/* ---------- テーブル共通 ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.table th,
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+  text-align: left;
+  vertical-align: top;
+}
+.table thead th {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.table .col-year {
+  width: 5em;
+  white-space: nowrap;
+}
+.table .col-month {
+  width: 3.5em;
+  white-space: nowrap;
+}
+.table .row-heading td {
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+}
+.table .row-end td {
+  text-align: right;
+}
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* ---------- 履歴書 ---------- */
+.profile {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 24px;
+  align-items: start;
+}
+.profile dl {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 7em 1fr;
+  row-gap: 0;
+}
+.profile dt,
+.profile dd {
+  margin: 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.profile dt {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.profile .furigana {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+.profile .name {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+.photo-box {
+  width: 120px;
+  height: 160px; /* 履歴書写真の標準サイズ 縦40mm×横30mm と同じ比率 */
+  border: 2px dashed var(--color-border);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 11px;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+.free-text {
+  min-height: 6em;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* ---------- 職務経歴書 ---------- */
+.summary {
+  margin: 0;
+}
+.tag-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tag-list li {
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  border-radius: 999px;
+  padding: 2px 12px;
+  font-size: 13px;
+}
+.check-list {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.company {
+  border-top: 1px solid var(--color-border);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+.company:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+.company__head {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  align-items: baseline;
+}
+.company__name {
+  margin: 0;
+  font-size: 18px;
+}
+.company__period {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.company__info {
+  margin: 4px 0 16px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.project {
+  position: relative;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+}
+.project__head {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.project__title {
+  margin: 0;
+  font-size: 15px;
+}
+.project__period {
+  color: var(--color-accent);
+  font-size: 13px;
+  font-weight: 600;
+}
+.project__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 4px 0 8px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+.project h5 {
+  margin: 10px 0 2px;
+  font-size: 13px;
+  color: var(--color-accent);
+}
+.project ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+.level {
+  display: inline-flex;
+  gap: 3px;
+}
+.level i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+.level i.on {
+  background: var(--color-accent);
+}
+
+.site-footer {
+  text-align: center;
+  color: var(--color-muted);
+  font-size: 12px;
+  padding: 24px;
+}
+
+/* ---------- スマホ対応 ---------- */
+@media (max-width: 640px) {
+  .card {
+    padding: 18px 16px;
+  }
+  .profile {
+    grid-template-columns: 1fr;
+  }
+  .photo-box {
+    order: -1;
+    margin: 0 auto;
+  }
+  .profile dl {
+    grid-template-columns: 6em 1fr;
+  }
+  .site-nav {
+    margin-left: 0;
+  }
+}

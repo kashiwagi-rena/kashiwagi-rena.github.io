@@ -1,0 +1,17 @@
+# ===== 個人情報を誤って公開しないための設定 =====
+# 実データ入りのファイルは private/ フォルダに置く（このフォルダは Git に入らない）
+private/
+
+# 「*.local.html」という名前のファイルも Git に入らない
+*.local.html
+
+# 提出用に書き出したPDFや写真
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.heic
+
+# OS が勝手に作るファイル
+.DS_Store
+Thumbs.db

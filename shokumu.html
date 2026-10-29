@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>職務経歴書 | Resume Template</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/print.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__logo" href="index.html">Resume<span>.</span></a>
+      <nav class="site-nav" aria-label="メイン">
+        <a href="index.html">トップ</a>
+        <a href="rirekisho.html">履歴書</a>
+        <a href="shokumu.html" aria-current="page">職務経歴書</a>
+      </nav>
+      <button class="btn-print" type="button" data-print>PDFで保存</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">職務経歴書</h1>
+    <p class="page-meta">20XX年 X月 X日 現在<br>氏名：山田 花子</p>
+
+    <!-- ===== 職務要約 ===== -->
+    <section class="card">
+      <h2 class="section-title">職務要約</h2>
+      <p class="summary">
+        大学卒業後、株式会社サンプルにてWebアプリケーションエンジニアとしてX年間、
+        受託開発に従事。現在は株式会社エグザンプルにて自社サービスのフロントエンド開発を担当しています。
+        （ここは3〜5行で「何年・どんな領域で・何をしてきたか」をまとめます。採用担当者が最初に読む場所です）
+      </p>
+    </section>
+
+    <!-- ===== 活かせる経験・スキル ===== -->
+    <section class="card">
+      <h2 class="section-title">活かせる経験・知識・技術</h2>
+      <ul class="check-list">
+        <li>React / TypeScript を用いたSPAの設計・実装（X年）</li>
+        <li>REST API の設計とバックエンド実装（Ruby on Rails）</li>
+        <li>テストコード（Jest / RSpec）の整備によるリリース品質の向上</li>
+        <li>3〜5名チームでのコードレビュー・後輩育成</li>
+      </ul>
+    </section>
+
+    <!-- ===== 職務経歴 ===== -->
+    <section class="card">
+      <h2 class="section-title">職務経歴</h2>
+
+      <!-- 会社ブロック（新しい会社を上に書く「逆編年体式」） -->
+      <article class="company">
+        <div class="company__head">
+          <h3 class="company__name">株式会社エグザンプル</h3>
+          <span class="company__period">20XX年X月 〜 現在</span>
+        </div>
+        <p class="company__info">事業内容：SaaS開発・運営 ／ 従業員数：XXX名 ／ 雇用形態：正社員</p>
+
+        <div class="project">
+          <div class="project__head">
+            <h4 class="project__title">自社SaaSの管理画面リニューアル</h4>
+            <span class="project__period">20XX年X月 〜 現在</span>
+          </div>
+          <div class="project__meta">
+            <span>役割：フロントエンドリード</span>
+            <span>規模：X名</span>
+          </div>
+          <ul class="tag-list">
+            <li>React</li><li>TypeScript</li><li>Vite</li><li>Storybook</li>
+          </ul>
+          <h5>業務内容</h5>
+          <ul>
+            <li>画面設計・コンポーネント設計</li>
+            <li>デザインシステムの構築</li>
+          </ul>
+          <h5>実績・工夫した点</h5>
+          <ul>
+            <li>ページ表示速度を XX% 改善（数字で書けると説得力が上がります）</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="company">
+        <div class="company__head">
+          <h3 class="company__name">株式会社サンプル</h3>
+          <span class="company__period">20XX年X月 〜 20XX年X月</span>
+        </div>
+        <p class="company__info">事業内容：受託システム開発 ／ 従業員数：XXX名 ／ 雇用形態：正社員</p>
+
+        <div class="project">
+          <div class="project__head">
+            <h4 class="project__title">ECサイトの新規構築</h4>
+            <span class="project__period">20XX年X月 〜 20XX年X月</span>
+          </div>
+          <div class="project__meta">
+            <span>役割：メンバー</span>
+            <span>規模：X名</span>
+          </div>
+          <ul class="tag-list">
+            <li>Ruby on Rails</li><li>MySQL</li><li>AWS</li>
+          </ul>
+          <h5>業務内容</h5>
+          <ul>
+            <li>商品管理・注文機能のAPI実装</li>
+            <li>単体テスト・結合テスト</li>
+          </ul>
+          <h5>実績・工夫した点</h5>
+          <ul>
+            <li>N+1問題を解消し、一覧APIの応答時間を X秒 → X秒 に短縮</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- ===== テクニカルスキル ===== -->
+    <section class="card">
+      <h2 class="section-title">テクニカルスキル</h2>
+      <div class="table-scroll">
+        <table class="table">
+          <thead>
+            <tr><th>分類</th><th>技術</th><th>経験年数</th><th>レベル</th></tr>
+          </thead>
+          <tbody>
+            <!-- レベルは class="on" の数で表します（5段階） -->
+            <tr>
+              <td>言語</td><td>TypeScript / JavaScript</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>言語</td><td>Ruby</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>FW</td><td>React / Next.js</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>DB</td><td>MySQL / PostgreSQL</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>インフラ</td><td>AWS / Docker</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中2"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>ツール</td><td>Git / GitHub</td><td>X年</td>
+              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 12px; color: var(--color-muted); margin: 8px 0 0;">
+        レベル目安：1 学習中 ／ 2 指示のもと実装可 ／ 3 独力で実装可 ／ 4 設計・レビュー可 ／ 5 指導・技術選定可
+      </p>
+    </section>
+
+    <!-- ===== 資格 ===== -->
+    <section class="card">
+      <h2 class="section-title">資格</h2>
+      <ul class="check-list">
+        <li>基本情報技術者試験（20XX年X月 合格）</li>
+      </ul>
+    </section>
+
+    <!-- ===== 自己PR ===== -->
+    <section class="card">
+      <h2 class="section-title">自己PR</h2>
+      <p class="summary">
+        【強みの見出し】<br>
+        強みを1つに絞り、それを裏付ける具体的なエピソード（状況→行動→結果）を書きます。
+        最後に、その強みを応募先でどう活かせるかで締めくくりましょう。
+      </p>
+    </section>
+
+    <p class="page-meta">以上</p>
+  </main>
+
+  <footer class="site-footer">Resume Template</footer>
+</body>
+</html>
