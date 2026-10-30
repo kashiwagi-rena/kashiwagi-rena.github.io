@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if page.noindex %}
+  <!-- 検索エンジンに載せない（お願いであって、アクセス制限ではない点に注意） -->
+  <meta name="robots" content="noindex, nofollow">
+  {% endif %}
+  {% seo %}
+  {% feed_meta %}
+  <link rel="stylesheet" href="{{ '/css/style.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/blog.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/css/print.css' | relative_url }}">
+  <script src="{{ '/js/main.js' | relative_url }}" defer></script>
+</head>
+<body>
+  {% include header.html %}
+
+  <main class="container">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">&copy; {{ site.time | date: '%Y' }} {{ site.title }}</footer>
+</body>
+</html>

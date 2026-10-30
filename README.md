@@ -3,16 +3,51 @@
 履歴書・職務経歴書の土台となる静的サイトのテンプレートです。
 HTML / CSS のみで作っており、ビルド不要・無料で GitHub Pages に公開できます。
 
+GitHub Pages に組み込まれている **Jekyll** で HTML を組み立てています（ビルドは GitHub が自動で行います）。
+
 ## ページ構成
 
 | ファイル | 内容 |
 | --- | --- |
+| `_config.yml` | サイト全体の設定 |
+| `_layouts/default.html` | 全ページ共通の枠（`<head>`・ヘッダー・フッター） |
+| `_layouts/post.html` | ブログ記事の枠 |
+| `_includes/header.html` | ヘッダー（ナビゲーション） |
 | `index.html` | トップページ |
 | `rirekisho.html` | 履歴書 |
 | `shokumu.html` | 職務経歴書 |
+| `blog/index.html` | ブログの記事一覧 |
+| `_posts/` | ブログ記事（Markdown） |
+| `assets/images/` | ブログ用の画像 |
 | `css/style.css` | 画面用スタイル（色は `:root` の変数で変更できます） |
+| `css/blog.css` | ブログ用スタイル |
 | `css/print.css` | 印刷用スタイル（A4） |
 | `js/main.js` | 「PDFで保存」ボタンの処理 |
+
+## ブログ記事の書き方
+
+`_posts/YYYY-MM-DD-英数字のタイトル.md` を作って push するだけです。
+
+```md
+---
+title: 記事のタイトル
+tags: [JavaScript, 学習メモ]
+---
+
+本文（最初の段落が一覧の抜粋になります）
+```
+
+- 公開URLは `/blog/YYYY/MM/英数字のタイトル/` になります
+- ファイル名の日付が未来だと公開されません
+- 本文に `{{` や `{%` を書くとテンプレートの命令として解釈されます。Vue や Liquid のコードを載せるときは、`{% raw %}` 〜 `{% endraw %}` で囲んでください
+- `/feed.xml` に RSS が自動で生成されます
+
+### はてなブログから移行する場合
+
+1. はてなブログの「設定 → 詳細設定 → エクスポート」で記事をダウンロードする（Movable Type 形式）
+2. 記事ごとに Markdown へ変換して `_posts/` に置く
+3. Front Matter に `original_url: 元記事のURL` を書くと、記事の最後に転載元のリンクが表示されます
+4. 画像ははてなフォトライフにあります。直リンクのままにせず、`assets/images/` に保存し直すと安全です
 
 ## ⚠️ 個人情報の扱い（重要）
 
@@ -43,4 +78,13 @@ commit 前に `git status` を実行し、`private/` が表示されないこと
 
 ## ローカルで確認する
 
-`index.html` をブラウザで直接開くだけで確認できます。
+Jekyll を使っているので、HTML をブラウザで直接開いてもレイアウトが反映されません。
+Ruby をインストールしたうえで、次を実行します。
+
+```bash
+bundle install
+bundle exec jekyll serve
+# → http://localhost:4000 で確認できる
+```
+
+`Gemfile` で GitHub Pages と同じバージョンの Jekyll を使うように指定しています。
