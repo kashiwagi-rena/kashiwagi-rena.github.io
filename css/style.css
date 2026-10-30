@@ -266,6 +266,9 @@ a {
   font-weight: 700;
   letter-spacing: 0.2em;
 }
+.profile--name-only {
+  grid-template-columns: 1fr; /* 写真枠がないので1列にする */
+}
 .photo-box {
   width: 120px;
   height: 160px; /* 履歴書写真の標準サイズ 縦40mm×横30mm と同じ比率 */
