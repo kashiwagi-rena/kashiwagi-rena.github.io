@@ -5,7 +5,9 @@ nav: blog
 ---
 <h1 class="page-title">Blog</h1>
 <p class="hero__lead" style="margin-bottom: 24px;">
-  学んだこと・作ったものの記録 ／ <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+  学んだこと・作ったものの記録
+  <!-- RSS は <head> の feed_meta で RSSリーダーが自動検出できるので、画面にリンクは置かない -->
+
 </p>
 
 {% if site.posts.size == 0 %}
