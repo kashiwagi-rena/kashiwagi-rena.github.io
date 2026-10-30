@@ -10,7 +10,17 @@ private/
 *.jpg
 *.jpeg
 *.png
+*.gif
+*.webp
 *.heic
+# ただし、ブログ用の画像フォルダは例外として Git に入れる（! は「除外の取り消し」）
+!assets/images/**
+
+# Jekyll がビルド時に作るファイル（GitHub 側で毎回作り直すので不要）
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
 
 # OS が勝手に作るファイル
 .DS_Store
