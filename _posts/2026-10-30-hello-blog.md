@@ -12,7 +12,7 @@ GitHub Pages と Jekyll でブログを作りました。この記事は**書き
 
 `_posts` フォルダに、次の名前で Markdown ファイルを作って push するだけです。
 
-```
+```text
 _posts/YYYY-MM-DD-英数字のタイトル.md
 ```
 

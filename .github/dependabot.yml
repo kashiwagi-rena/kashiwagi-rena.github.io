@@ -1,0 +1,12 @@
+# Action や gem のバージョンを、月に1回自動でチェックして更新の PR を作ってくれる
+# （SHA で固定したバージョンを手で追いかけなくてよくなる）
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  - package-ecosystem: bundler
+    directory: /
+    schedule:
+      interval: monthly

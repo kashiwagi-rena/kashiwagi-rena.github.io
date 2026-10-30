@@ -39,3 +39,6 @@ exclude:
   - private/
   - Gemfile
   - Gemfile.lock
+  # ⚠️ CI で gem をインストールする場所。除外しないと gem の中身までサイトとして処理されてビルドが失敗する
+  - vendor/
+  - .bundle/

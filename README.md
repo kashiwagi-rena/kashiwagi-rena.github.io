@@ -3,7 +3,7 @@
 履歴書・職務経歴書の土台となる静的サイトのテンプレートです。
 HTML / CSS のみで作っており、ビルド不要・無料で GitHub Pages に公開できます。
 
-GitHub Pages に組み込まれている **Jekyll** で HTML を組み立てています（ビルドは GitHub が自動で行います）。
+**Jekyll** で HTML を組み立て、**GitHub Actions** でチェック・ビルド・公開しています。
 
 ## ページ構成
 
@@ -87,4 +87,22 @@ bundle exec jekyll serve
 # → http://localhost:4000 で確認できる
 ```
 
-`Gemfile` で GitHub Pages と同じバージョンの Jekyll を使うように指定しています。
+
+
+## CI/CD（GitHub Actions）
+
+`.github/workflows/ci-cd.yml` で次を自動実行します。
+
+| タイミング | 実行内容 |
+| --- | --- |
+| main への Pull Request | Markdown チェック ＋ ビルド ＋ リンク切れチェック |
+| main への push（マージ） | 上記がすべて通ったら GitHub Pages に公開 |
+
+チェックが失敗すると公開されません。手元で同じチェックを実行するには次のコマンドを使います。
+
+```bash
+npx markdownlint-cli2 "_posts/**/*.md"
+bundle exec jekyll build && bundle exec htmlproofer ./_site --disable-external --no-enforce-https
+```
+
+`.github/dependabot.yml` により、Action と gem の更新 PR が月1回自動で作られます。
