@@ -16,11 +16,11 @@ private/
 # ただし、ブログ用の画像フォルダは例外として Git に入れる（! は「除外の取り消し」）
 !assets/images/**
 
-# Jekyll がビルド時に作るファイル（GitHub 側で毎回作り直すので不要）
+# ビルド結果（CI で毎回作り直すので不要）
 _site/
-.jekyll-cache/
-.jekyll-metadata
-.sass-cache/
+
+# npm でインストールしたパッケージ（package-lock.json から再現できる）
+node_modules/
 
 # OS が勝手に作るファイル
 .DS_Store

@@ -1,0 +1,22 @@
+{
+  "name": "kashiwagi-rena.github.io",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy",
+    "lint:md": "markdownlint-cli2 \"_posts/**/*.md\"",
+    "check:links": "linkinator _site --recurse --skip \"^https?://(?!127|localhost)\"",
+    "test": "npm run lint:md && npm run build && npm run check:links"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.7",
+    "@11ty/eleventy-plugin-rss": "^3.1.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "linkinator": "^8.1.0",
+    "markdownlint-cli2": "^0.24.0"
+  }
+}

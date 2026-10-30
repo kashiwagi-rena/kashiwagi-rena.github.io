@@ -1,0 +1,16 @@
+# Action や npm パッケージのバージョンを、月に1回自動でチェックして更新の PR を作ってくれる
+# （SHA で固定したバージョンを手で追いかけなくてよくなる）
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      # 開発用パッケージの更新は1つの PR にまとめる（PR が大量に届かないように）
+      dev-dependencies:
+        dependency-type: development

@@ -1,0 +1,12 @@
+// markdownlint の設定（ルール一覧：https://github.com/DavidAnson/markdownlint）
+{
+  "config": {
+    "default": true,
+    // 日本語は1行が長くなりやすいので、行の長さは制限しない
+    "MD013": false,
+    // 記事の中で HTML を使うことを許可する
+    "MD033": false,
+    // タイトルは Front Matter に書くので、本文の最初が見出しでなくてもよい
+    "MD041": false
+  }
+}

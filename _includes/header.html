@@ -1,13 +1,13 @@
 <header class="site-header">
   <div class="site-header__inner">
-    <a class="site-header__logo" href="{{ '/' | relative_url }}">Resume<span>.</span></a>
+    <a class="site-header__logo" href="{{ '/' | url }}">Resume<span>.</span></a>
     <nav class="site-nav" aria-label="メイン">
-      <a href="{{ '/' | relative_url }}" {% if page.nav == 'top' %}aria-current="page"{% endif %}>トップ</a>
-      <a href="{{ '/rirekisho.html' | relative_url }}" {% if page.nav == 'rirekisho' %}aria-current="page"{% endif %}>履歴書</a>
-      <a href="{{ '/shokumu.html' | relative_url }}" {% if page.nav == 'shokumu' %}aria-current="page"{% endif %}>職務経歴書</a>
-      <a href="{{ '/blog/' | relative_url }}" {% if page.nav == 'blog' %}aria-current="page"{% endif %}>ブログ</a>
+      <a href="{{ '/' | url }}" {% if nav == 'top' %}aria-current="page"{% endif %}>トップ</a>
+      <a href="{{ '/rirekisho.html' | url }}" {% if nav == 'rirekisho' %}aria-current="page"{% endif %}>履歴書</a>
+      <a href="{{ '/shokumu.html' | url }}" {% if nav == 'shokumu' %}aria-current="page"{% endif %}>職務経歴書</a>
+      <a href="{{ '/blog/' | url }}" {% if nav == 'blog' %}aria-current="page"{% endif %}>ブログ</a>
     </nav>
-    {% if page.printable %}
+    {% if printable %}
     <button class="btn-print" type="button" data-print>PDFで保存</button>
     {% endif %}
   </div>

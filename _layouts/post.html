@@ -1,13 +1,14 @@
 ---
-layout: default
+layout: default.html
 ---
+{% assign postTags = tags | displayTags %}
 <article class="card post">
   <header class="post__header">
-    <time class="post__date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%Y.%m.%d' }}</time>
-    <h1 class="post__title">{{ page.title }}</h1>
-    {% if page.tags.size > 0 %}
+    <time class="post__date" datetime="{{ page.date | isoDate }}">{{ page.date | displayDate }}</time>
+    <h1 class="post__title">{{ title }}</h1>
+    {% if postTags.size > 0 %}
     <ul class="tag-list">
-      {% for tag in page.tags %}<li>{{ tag }}</li>{% endfor %}
+      {% for tag in postTags %}<li>{{ tag }}</li>{% endfor %}
     </ul>
     {% endif %}
   </header>
@@ -16,19 +17,21 @@ layout: default
     {{ content }}
   </div>
 
-  {% if page.original_url %}
+  {% if original_url %}
   <p class="post__original">
-    この記事は <a href="{{ page.original_url }}" rel="noopener">はてなブログ</a> に掲載したものを転載しています。
+    この記事は <a href="{{ original_url }}" rel="noopener">はてなブログ</a> に掲載したものを転載しています。
   </p>
   {% endif %}
 </article>
 
+{% assign previousPost = collections.posts | getPreviousCollectionItem: page %}
+{% assign nextPost = collections.posts | getNextCollectionItem: page %}
 <nav class="post-nav" aria-label="前後の記事">
-  {% if page.previous %}
-  <a class="post-nav__link" href="{{ page.previous.url | relative_url }}">← {{ page.previous.title }}</a>
+  {% if previousPost %}
+  <a class="post-nav__link" href="{{ previousPost.url | url }}">← {{ previousPost.data.title }}</a>
   {% else %}<span></span>{% endif %}
-  {% if page.next %}
-  <a class="post-nav__link post-nav__link--next" href="{{ page.next.url | relative_url }}">{{ page.next.title }} →</a>
+  {% if nextPost %}
+  <a class="post-nav__link post-nav__link--next" href="{{ nextPost.url | url }}">{{ nextPost.data.title }} →</a>
   {% endif %}
 </nav>
-<p><a href="{{ '/blog/' | relative_url }}">記事一覧へ戻る</a></p>
+<p><a href="{{ '/blog/' | url }}">記事一覧へ戻る</a></p>
