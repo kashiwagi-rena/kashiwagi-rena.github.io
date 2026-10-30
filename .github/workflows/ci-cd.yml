@@ -1,0 +1,69 @@
+# =========================================================
+# CI/CD：チェック（CI）→ 公開（CD）
+#   - Pull Request のとき：チェックだけ実行（公開はしない）
+#   - main に push（マージ）されたとき：チェック → 通ったら公開
+# =========================================================
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch: # Actions タブから手動実行もできるようにする
+
+# 🔐 デフォルトの権限は「読み取りのみ」に絞る（最小権限の原則）
+#    書き込みが必要なジョブだけ、個別に権限を追加する
+permissions:
+  contents: read
+
+# 同じブランチで連続して push したら、古い実行はキャンセルする
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------- CI：Markdown チェック → ビルド → リンク切れチェック ----------
+  build:
+    name: Lint, Build & Check links
+    runs-on: ubuntu-latest
+    steps:
+      # 🔐 Action は タグ（v7 など）ではなく commit SHA で固定する
+      #    タグは後から付け替えられるので、乗っ取られたときに悪意あるコードが動くリスクがある
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      # 🔐 npm install ではなく npm ci：package-lock.json に書かれたバージョンだけを入れる
+      #    --ignore-scripts：パッケージのインストール時スクリプト（攻撃によく使われる）を実行しない
+      - run: npm ci --ignore-scripts
+      - name: Markdown のチェック
+        run: npm run lint:md
+      - name: Eleventy でビルド
+        run: npm run build
+      - name: リンク切れ・存在しないファイルへの参照をチェック
+        run: npm run check:links
+      - name: 公開用にアップロード
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+
+  # ---------- CD：GitHub Pages に公開 ----------
+  deploy:
+    name: Deploy
+    # PR では公開しない。チェックが通ったときだけ公開する
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    # このジョブだけに、公開に必要な権限を与える
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

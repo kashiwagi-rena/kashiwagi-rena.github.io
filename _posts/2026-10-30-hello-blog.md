@@ -1,18 +1,18 @@
 ---
 title: ブログをはじめました
-tags: [お知らせ, Jekyll]
+tags: [お知らせ, Eleventy]
 # はてなブログから転載する記事は、元のURLを書くと記事の最後にリンクが出ます
 # original_url: https://example.hatenablog.com/entry/2026/10/30/000000
 ---
 
-GitHub Pages と Jekyll でブログを作りました。この記事は**書き方のサンプル**です。
+GitHub Pages と Eleventy でブログを作りました。この記事は**書き方のサンプル**です。
 最初の段落は、記事一覧に「抜粋」として表示されます。
 
 ## 記事の追加のしかた
 
 `_posts` フォルダに、次の名前で Markdown ファイルを作って push するだけです。
 
-```
+```text
 _posts/YYYY-MM-DD-英数字のタイトル.md
 ```
 
@@ -38,7 +38,7 @@ const greet = (name) => {
   // テンプレートリテラルで文字列を組み立てる
   return `こんにちは、${name}さん`;
 };
-console.log(greet("Jekyll"));
+console.log(greet("Eleventy"));
 ```
 
 ## 画像

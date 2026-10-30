@@ -1,15 +1,15 @@
 # Resume Template
 
 履歴書・職務経歴書の土台となる静的サイトのテンプレートです。
-HTML / CSS のみで作っており、ビルド不要・無料で GitHub Pages に公開できます。
-
-GitHub Pages に組み込まれている **Jekyll** で HTML を組み立てています（ビルドは GitHub が自動で行います）。
+**Eleventy（11ty / Node.js）** で HTML を組み立て、**GitHub Actions** でチェック・ビルドして GitHub Pages に無料で公開しています。
 
 ## ページ構成
 
 | ファイル | 内容 |
 | --- | --- |
-| `_config.yml` | サイト全体の設定 |
+| `eleventy.config.js` | Eleventy の設定（プラグイン・フィルターなど） |
+| `_data/site.js` | サイト名・URLなど全体の情報 |
+| `package.json` | 使っている npm パッケージと、`npm run` で使うコマンド |
 | `_layouts/default.html` | 全ページ共通の枠（`<head>`・ヘッダー・フッター） |
 | `_layouts/post.html` | ブログ記事の枠 |
 | `_includes/header.html` | ヘッダー（ナビゲーション） |
@@ -18,6 +18,7 @@ GitHub Pages に組み込まれている **Jekyll** で HTML を組み立てて�
 | `shokumu.html` | 職務経歴書 |
 | `blog/index.html` | ブログの記事一覧 |
 | `_posts/` | ブログ記事（Markdown） |
+| `_posts/_posts.json` | 記事全体に共通の設定（レイアウト・URLの形） |
 | `assets/images/` | ブログ用の画像 |
 | `css/style.css` | 画面用スタイル（色は `:root` の変数で変更できます） |
 | `css/blog.css` | ブログ用スタイル |
@@ -38,9 +39,8 @@ tags: [JavaScript, 学習メモ]
 ```
 
 - 公開URLは `/blog/YYYY/MM/英数字のタイトル/` になります
-- ファイル名の日付が未来だと公開されません
 - 本文に `{{` や `{%` を書くとテンプレートの命令として解釈されます。Vue や Liquid のコードを載せるときは、`{% raw %}` 〜 `{% endraw %}` で囲んでください
-- `/feed.xml` に RSS が自動で生成されます
+- `/feed.xml` に RSS（Atom）が自動で生成されます
 
 ### はてなブログから移行する場合
 
@@ -78,13 +78,23 @@ commit 前に `git status` を実行し、`private/` が表示されないこと
 
 ## ローカルで確認する
 
-Jekyll を使っているので、HTML をブラウザで直接開いてもレイアウトが反映されません。
-Ruby をインストールしたうえで、次を実行します。
+Node.js 22 以降が必要です（`.nvmrc` にバージョンを書いてあります）。
 
 ```bash
-bundle install
-bundle exec jekyll serve
-# → http://localhost:4000 で確認できる
+npm ci        # package-lock.json どおりにパッケージをインストール
+npm start     # → http://localhost:8080 で確認できる（保存すると自動で再読み込み）
+npm test      # CI と同じチェック（Markdown → ビルド → リンク切れ）
 ```
 
-`Gemfile` で GitHub Pages と同じバージョンの Jekyll を使うように指定しています。
+## CI/CD（GitHub Actions）
+
+`.github/workflows/ci-cd.yml` で次を自動実行します。
+
+| タイミング | 実行内容 |
+| --- | --- |
+| main への Pull Request | Markdown チェック ＋ ビルド ＋ リンク切れチェック |
+| main への push（マージ） | 上記がすべて通ったら GitHub Pages に公開 |
+
+チェックが失敗すると公開されません。
+
+`.github/dependabot.yml` により、Action と npm パッケージの更新 PR が月1回自動で作られます。

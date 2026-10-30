@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default.html
 nav: top
 ---
 <section class="hero">
@@ -8,32 +8,33 @@ nav: top
 </section>
 
 <div class="doc-links">
-  <a class="card doc-link" href="{{ '/rirekisho.html' | relative_url }}">
+  <a class="card doc-link" href="{{ '/rirekisho.html' | url }}">
     <div class="doc-link__icon" aria-hidden="true">📄</div>
     <h2>履歴書</h2>
     <p>基本情報・学歴・職歴・資格・志望動機</p>
   </a>
-  <a class="card doc-link" href="{{ '/shokumu.html' | relative_url }}">
+  <a class="card doc-link" href="{{ '/shokumu.html' | url }}">
     <div class="doc-link__icon" aria-hidden="true">💼</div>
     <h2>職務経歴書</h2>
     <p>職務要約・プロジェクト経歴・スキル・自己PR</p>
   </a>
-  <a class="card doc-link" href="{{ '/blog/' | relative_url }}">
+  <a class="card doc-link" href="{{ '/blog/' | url }}">
     <div class="doc-link__icon" aria-hidden="true">✍️</div>
     <h2>ブログ</h2>
     <p>学んだこと・作ったものの記録</p>
   </a>
 </div>
 
-{% if site.posts.size > 0 %}
+{% assign latestPosts = collections.posts | reverse %}
+{% if latestPosts.size > 0 %}
 <section style="margin-top: 40px;">
   <h2 class="section-title">最新の記事</h2>
   <ul class="post-list">
-    {% for post in site.posts limit: 3 %}
+    {% for post in latestPosts limit: 3 %}
     <li>
-      <a class="card post-card" href="{{ post.url | relative_url }}">
-        <time class="post__date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%Y.%m.%d' }}</time>
-        <h3 class="post-card__title">{{ post.title }}</h3>
+      <a class="card post-card" href="{{ post.url | url }}">
+        <time class="post__date" datetime="{{ post.date | isoDate }}">{{ post.date | displayDate }}</time>
+        <h3 class="post-card__title">{{ post.data.title }}</h3>
       </a>
     </li>
     {% endfor %}

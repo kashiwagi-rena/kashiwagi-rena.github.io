@@ -1,0 +1,6 @@
+{
+  "layout": "post.html",
+  "nav": "blog",
+  "tags": ["posts"],
+  "permalink": "/blog/{{ page.date | yearMonthPath }}/{{ page.fileSlug }}/"
+}

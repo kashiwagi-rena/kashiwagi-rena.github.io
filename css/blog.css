@@ -119,18 +119,16 @@
 .prose code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
-.prose .highlighter-rouge {
-  margin: 1.5em 0;
-}
 
-/* シンタックスハイライト（rouge が付けるクラス） */
-.highlight .c, .highlight .c1, .highlight .cm { color: #7f849c; font-style: italic; } /* コメント */
-.highlight .k, .highlight .kd, .highlight .kn, .highlight .kr { color: #cba6f7; }    /* キーワード */
-.highlight .s, .highlight .s1, .highlight .s2, .highlight .sb { color: #a6e3a1; }    /* 文字列 */
-.highlight .mi, .highlight .mf, .highlight .kc { color: #fab387; }                   /* 数値・true/false */
-.highlight .nf, .highlight .fm { color: #89b4fa; }                                   /* 関数名 */
-.highlight .nb, .highlight .nc, .highlight .nx { color: #f9e2af; }                   /* 組み込み・クラス */
-.highlight .o, .highlight .p { color: #94e2d5; }                                     /* 演算子 */
+/* シンタックスハイライト（Prism が付けるクラス） */
+.prose .token.comment, .prose .token.prolog { color: #7f849c; font-style: italic; }
+.prose .token.keyword, .prose .token.atrule { color: #cba6f7; }
+.prose .token.string, .prose .token.template-string, .prose .token.attr-value { color: #a6e3a1; }
+.prose .token.number, .prose .token.boolean { color: #fab387; }
+.prose .token.function { color: #89b4fa; }
+.prose .token.class-name, .prose .token.builtin, .prose .token.tag { color: #f9e2af; }
+.prose .token.operator, .prose .token.punctuation { color: #94e2d5; }
+.prose .token.interpolation { color: #e4e4ef; }
 
 /* ---------- 前後の記事 ---------- */
 .post-nav {
