@@ -1,0 +1,79 @@
+# =========================================================
+# CI/CD：チェック（CI）→ 公開（CD）
+#   - Pull Request のとき：チェックだけ実行（公開はしない）
+#   - main に push（マージ）されたとき：チェック → 通ったら公開
+# =========================================================
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch: # Actions タブから手動実行もできるようにする
+
+# 🔐 デフォルトの権限は「読み取りのみ」に絞る（最小権限の原則）
+#    書き込みが必要なジョブだけ、個別に権限を追加する
+permissions:
+  contents: read
+
+# 同じブランチで連続して push したら、古い実行はキャンセルする
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------- CI①：Markdown の書き方チェック ----------
+  lint:
+    name: Lint (Markdown)
+    runs-on: ubuntu-latest
+    steps:
+      # 🔐 Action は タグ（v7 など）ではなく commit SHA で固定する
+      #    タグは後から付け替えられるので、乗っ取られたときに悪意あるコードが動くリスクがある
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: DavidAnson/markdownlint-cli2-action@696eb3f2509270d7b882d2aa68347bc676e7af34 # v25.0.0
+        with:
+          globs: "_posts/**/*.md"
+
+  # ---------- CI②：ビルド＋リンク切れチェック ----------
+  build:
+    name: Build & Check links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@7f797815d8adceb1c412e7abefdd1ab4abc47a5f # v1.335.0
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true # gem をキャッシュして2回目以降を速くする
+      - name: Jekyll でビルド
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - name: リンク切れ・存在しないファイルへの参照をチェック
+        # 外部サイトへのリンクは相手の都合で失敗することがあるので、サイト内だけチェックする
+        run: bundle exec htmlproofer ./_site --disable-external --no-enforce-https
+      - name: 公開用にアップロード
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+
+  # ---------- CD：GitHub Pages に公開 ----------
+  deploy:
+    name: Deploy
+    # PR では公開しない。チェックが両方通ったときだけ公開する
+    if: github.event_name != 'pull_request'
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    # このジョブだけに、公開に必要な権限を与える
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
