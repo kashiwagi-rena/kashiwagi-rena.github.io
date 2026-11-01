@@ -1,0 +1,50 @@
+# =========================================================
+# 依存パッケージのセキュリティチェック（npm audit）
+#   - Pull Request / main への push のとき
+#   - 毎週月曜（コードを変えていなくても、新しい脆弱性は毎日公開されるため）
+# =========================================================
+name: Security
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 0 * * 1" # 毎週月曜 9:17（日本時間）。cron は UTC で書く
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+
+      # ① パッケージが npm 公式レジストリから改ざんされずに届いたかを、署名で検証する
+      - name: 署名の検証（改ざんチェック）
+        run: npm audit signatures
+
+      # ② 既知の脆弱性の一覧を、Actions の実行結果ページ（Summary）に表示する（失敗にはしない）
+      - name: 脆弱性レポート
+        run: |
+          {
+            echo "## npm audit レポート"
+            echo '```'
+            npm audit || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # ③ critical（最も深刻）があればチェックを失敗にする
+      - name: critical の脆弱性があれば失敗
+        run: npm audit --audit-level=critical

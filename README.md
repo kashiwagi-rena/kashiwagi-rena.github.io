@@ -98,3 +98,14 @@ npm test      # CI と同じチェック（Markdown → ビルド → リンク�
 チェックが失敗すると公開されません。
 
 `.github/dependabot.yml` により、Action と npm パッケージの更新 PR が月1回自動で作られます。
+
+### セキュリティチェック
+
+`.github/workflows/security.yml` で、PR・main への push・毎週月曜に次を実行します。
+
+| チェック | 失敗する条件 |
+| --- | --- |
+| `npm audit signatures` | パッケージの署名が検証できない（改ざんの疑い） |
+| `npm audit --audit-level=critical` | critical の脆弱性がある |
+
+high 以下の脆弱性は失敗にせず、Actions の実行結果の Summary にレポートを表示します。
