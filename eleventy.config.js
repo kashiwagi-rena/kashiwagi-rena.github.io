@@ -5,6 +5,8 @@
 // =========================================================
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import site from "./_data/site.js";
 
 export default function (eleventyConfig) {
@@ -70,6 +72,19 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("displayTags", (tags = []) =>
     tags.filter((tag) => tag !== "posts")
   );
+
+  // ---------- キャッシュ対策 ----------
+  // ファイルの中身からハッシュ値を作る。中身が変わると値も変わるので、
+  // /css/blog.css?v=ハッシュ値 のように付ければ、ブラウザが古いキャッシュを使わなくなる
+  const hashCache = new Map();
+  eleventyConfig.on("eleventy.before", () => hashCache.clear()); // npm start 中の再ビルドに対応
+  eleventyConfig.addFilter("withHash", (urlPath) => {
+    if (!hashCache.has(urlPath)) {
+      const content = readFileSync(`.${urlPath}`);
+      hashCache.set(urlPath, createHash("sha256").update(content).digest("hex").slice(0, 8));
+    }
+    return `${urlPath}?v=${hashCache.get(urlPath)}`;
+  });
 
   // ---------- タグ ----------
   // タグ名 → URL に使える文字列（例：「学習 メモ」→「学習-メモ」）
