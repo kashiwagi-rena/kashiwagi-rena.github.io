@@ -1,0 +1,21 @@
+{%- comment -%}
+  記事カード（一覧ページ・タグページで共通）
+  ⚠️ <a> の中に <a> は入れられない（HTML の仕様違反）ので、カード全体を <a> で囲まず、
+     タイトルのリンクを CSS でカード全体に広げる。タグのリンクはその上に重ねて押せるようにしている
+{%- endcomment -%}
+{%- assign postTags = post.data.tags | displayTags -%}
+<article class="card post-card">
+  <time class="post__date" datetime="{{ post.date | isoDate }}">{{ post.date | displayDate }}</time>
+  <h2 class="post-card__title">
+    <a class="post-card__link" href="{{ post.url | url }}">{{ post.data.title }}</a>
+  </h2>
+  <p class="post-card__excerpt">{{ post.content | excerpt | truncate: 100 }}</p>
+  {%- if postTags.size > 0 %}
+  <ul class="tag-list">
+    {%- for tag in postTags %}
+    {%- assign slug = tag | tagSlug %}
+    <li><a href="{{ '/blog/tags/' | append: slug | append: '/' | url }}">{{ tag }}</a></li>
+    {%- endfor %}
+  </ul>
+  {%- endif %}
+</article>

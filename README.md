@@ -13,10 +13,13 @@
 | `_layouts/default.html` | 全ページ共通の枠（`<head>`・ヘッダー・フッター） |
 | `_layouts/post.html` | ブログ記事の枠 |
 | `_includes/header.html` | ヘッダー（ナビゲーション） |
+| `_includes/tag-nav.html` | ブログのタグのタブ |
+| `_includes/post-card.html` | 記事一覧のカード |
 | `index.html` | トップページ |
 | `rirekisho.html` | 履歴書 |
 | `shokumu.html` | 職務経歴書 |
 | `blog/index.html` | ブログの記事一覧 |
+| `blog/tags.html` | タグごとの記事一覧（タグの数だけページを自動生成） |
 | `_posts/` | ブログ記事（Markdown） |
 | `_posts/_posts.json` | 記事全体に共通の設定（レイアウト・URLの形） |
 | `assets/images/` | ブログ用の画像 |
@@ -41,6 +44,8 @@ tags: [JavaScript, 学習メモ]
 - 公開URLは `/blog/YYYY/MM/英数字のタイトル/` になります
 - 本文に `{{` や `{%` を書くとテンプレートの命令として解釈されます。Vue や Liquid のコードを載せるときは、`{% raw %}` 〜 `{% endraw %}` で囲んでください
 - `/feed.xml` に RSS（Atom）が自動で生成されます
+- `tags` に書いたタグごとに、`/blog/tags/タグ名/` の一覧ページが自動で作られます（英字は小文字、スペースは `-`、記号は削除）
+- 違うタグが同じURLになる場合（例：`C#` と `C`）はビルドがエラーで止まります。タグ名を変えてください
 
 ### はてなブログから移行する場合
 

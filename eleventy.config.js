@@ -71,6 +71,41 @@ export default function (eleventyConfig) {
     tags.filter((tag) => tag !== "posts")
   );
 
+  // ---------- タグ ----------
+  // タグ名 → URL に使える文字列（例：「学習 メモ」→「学習-メモ」）
+  // 🔐 「../」や「/」が入ったタグで、意図しない場所にページが作られないように記号を取り除く
+  const tagSlug = (tag) =>
+    String(tag)
+      .trim()
+      .toLowerCase()
+      .replace(/[\s　]+/g, "-")
+      .replace(/[\/\\?#%&:*"<>|.]+/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  eleventyConfig.addFilter("tagSlug", tagSlug);
+
+  // 全記事のタグを集めて「タグ名・件数・URL用の文字列」の一覧を作る（件数の多い順）
+  eleventyConfig.addCollection("tagList", (collectionApi) => {
+    const counts = new Map();
+    for (const post of collectionApi.getFilteredByTag("posts")) {
+      for (const tag of post.data.tags || []) {
+        if (tag === "posts") continue;
+        counts.set(tag, (counts.get(tag) || 0) + 1);
+      }
+    }
+    const list = [...counts].map(([name, count]) => ({ name, count, slug: tagSlug(name) }));
+    // 記号だけのタグなど、URL にできないものは除外し、同じ URL になるタグがあればビルドを止める
+    const seen = new Map();
+    for (const tag of list) {
+      if (!tag.slug) throw new Error(`タグ「${tag.name}」は URL にできる文字を含んでいません`);
+      if (seen.has(tag.slug)) {
+        throw new Error(`タグ「${seen.get(tag.slug)}」と「${tag.name}」が同じ URL になります`);
+      }
+      seen.set(tag.slug, tag.name);
+    }
+    return list.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "ja"));
+  });
+
   return {
     dir: {
       input: ".",

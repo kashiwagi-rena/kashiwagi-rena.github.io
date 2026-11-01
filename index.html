@@ -30,14 +30,9 @@ nav: top
 <section style="margin-top: 40px;">
   <h2 class="section-title">最新の記事</h2>
   <ul class="post-list">
-    {% for post in latestPosts limit: 3 %}
-    <li>
-      <a class="card post-card" href="{{ post.url | url }}">
-        <time class="post__date" datetime="{{ post.date | isoDate }}">{{ post.date | displayDate }}</time>
-        <h3 class="post-card__title">{{ post.data.title }}</h3>
-      </a>
-    </li>
-    {% endfor %}
+    {%- for post in latestPosts limit: 3 %}
+    <li>{% include "post-card.html", post: post %}</li>
+    {%- endfor %}
   </ul>
 </section>
 {% endif %}

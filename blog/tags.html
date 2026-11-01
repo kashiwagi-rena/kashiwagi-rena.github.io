@@ -1,0 +1,24 @@
+---
+# タグ1つにつき1ページを自動で作る（Eleventy の pagination 機能）
+# collections.tagList の要素を1つずつ取り出して tag という名前で使う
+layout: default.html
+nav: blog
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: "/blog/tags/{{ tag.slug }}/"
+eleventyComputed:
+  title: "「{{ tag.name }}」の記事"
+---
+<h1 class="page-title">#{{ tag.name }}</h1>
+<p class="hero__lead" style="margin-bottom: 24px;">「{{ tag.name }}」の記事（{{ tag.count }}件）</p>
+
+{% include "tag-nav.html", currentTag: tag.name %}
+
+{% assign posts = collections[tag.name] | reverse %}
+<ul class="post-list">
+  {%- for post in posts %}
+  <li>{% include "post-card.html", post: post %}</li>
+  {%- endfor %}
+</ul>

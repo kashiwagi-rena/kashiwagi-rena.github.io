@@ -8,7 +8,10 @@ layout: default.html
     <h1 class="post__title">{{ title }}</h1>
     {% if postTags.size > 0 %}
     <ul class="tag-list">
-      {% for tag in postTags %}<li>{{ tag }}</li>{% endfor %}
+      {%- for tag in postTags %}
+      {%- assign slug = tag | tagSlug %}
+      <li><a href="{{ '/blog/tags/' | append: slug | append: '/' | url }}">{{ tag }}</a></li>
+      {%- endfor %}
     </ul>
     {% endif %}
   </header>
