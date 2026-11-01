@@ -1,7 +1,4 @@
-/* =========================================================
-   Resume Template - 画面用スタイル
-   色やフォントは :root の変数を変えるだけで全体に反映されます
-   ========================================================= */
+/* 色やフォントは :root の変数を変えるだけで全体に反映される */
 :root {
   --color-bg: #f4f6fb;
   --color-surface: #ffffff;
@@ -41,7 +38,6 @@ a {
   color: var(--color-accent);
 }
 
-/* ---------- ヘッダー（ナビ） ---------- */
 .site-header {
   position: sticky;
   top: 0;
@@ -87,7 +83,7 @@ a {
   color: var(--color-accent);
 }
 .menu-toggle {
-  display: none; /* PC では表示しない（スマホ用） */
+  display: none;
   place-items: center;
   width: 44px;
   height: 44px;
@@ -126,7 +122,6 @@ a {
 .menu-toggle__bar::after {
   top: 7px;
 }
-/* 開いているときは × にする */
 .menu-toggle[aria-expanded="true"] .menu-toggle__bar {
   background: transparent;
 }
@@ -155,7 +150,6 @@ a {
   cursor: pointer;
 }
 
-/* ---------- レイアウト ---------- */
 .container {
   max-width: 960px;
   margin: 0 auto;
@@ -198,7 +192,6 @@ a {
   background: linear-gradient(var(--color-accent), var(--color-accent-2));
 }
 
-/* ---------- トップページ ---------- */
 .hero {
   text-align: center;
   padding: 48px 20px 24px;
@@ -253,7 +246,6 @@ a {
   color: #b45309;
 }
 
-/* ---------- テーブル共通 ---------- */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -292,7 +284,6 @@ a {
   overflow-x: auto;
 }
 
-/* ---------- 履歴書 ---------- */
 .profile {
   display: grid;
   grid-template-columns: 1fr 120px;
@@ -325,7 +316,7 @@ a {
   letter-spacing: 0.2em;
 }
 .profile--name-only {
-  grid-template-columns: 1fr; /* 写真枠がないので1列にする */
+  grid-template-columns: 1fr;
 }
 .photo-box {
   width: 120px;
@@ -345,7 +336,6 @@ a {
   margin: 0;
 }
 
-/* ---------- 職務経歴書 ---------- */
 .summary {
   margin: 0;
 }
@@ -458,10 +448,8 @@ a {
   padding: 24px;
 }
 
-/* ---------- スマホ対応 ---------- */
 @media (max-width: 640px) {
-  /* ヘッダー：1行にロゴ・（PDFボタン）・ハンバーガー。メニューはボタンで開閉する
-     1行に収まって低くなったので、PCと同じく画面上部に固定したままにする */
+  /* ヘッダーは1行に収まるので、スマホでも上部に固定したままにする */
   .site-header__inner {
     display: grid;
     grid-template-columns: 1fr auto auto;

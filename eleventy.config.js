@@ -1,8 +1,3 @@
-// =========================================================
-// Eleventy（11ty）の設定ファイル
-//   ローカル確認：npm start → http://localhost:8080
-//   ビルド　　　：npm run build → _site/ に HTML が出力される
-// =========================================================
 import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { createHash } from "node:crypto";
@@ -10,11 +5,8 @@ import { readFileSync } from "node:fs";
 import site from "./_data/site.js";
 
 export default function (eleventyConfig) {
-  // ---------- プラグイン ----------
-  // コードブロックの色付け（Prism）
   eleventyConfig.addPlugin(syntaxHighlight);
 
-  // RSS（/feed.xml）を自動生成
   eleventyConfig.addPlugin(feedPlugin, {
     type: "atom",
     outputPath: "/feed.xml",
@@ -28,7 +20,6 @@ export default function (eleventyConfig) {
     },
   });
 
-  // ---------- そのままコピーするファイル ----------
   // 履歴書・職務経歴書は「テンプレートとして処理しない」単体HTML。
   // private/ にコピーして手元で開けるようにするため、あえてレイアウトを使っていない
   eleventyConfig.addPassthroughCopy("rirekisho.html");
@@ -37,18 +28,14 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("assets");
 
-  // ---------- サイトとして処理しないファイル ----------
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("private/**");
   // 単体HTMLはテンプレートとして処理せず、上の addPassthroughCopy でそのままコピーする
   eleventyConfig.ignores.add("rirekisho.html");
   eleventyConfig.ignores.add("shokumu.html");
 
-  // ---------- フィルター（テンプレートの中で使う関数） ----------
-  // 日付を ISO 8601 形式に（<time datetime="..."> 用）
   eleventyConfig.addFilter("isoDate", (date) => new Date(date).toISOString());
 
-  // 日付を 2026.10.30 の形式に
   // ファイル名の日付は UTC の 0 時として読み込まれるので、UTC で表示する
   eleventyConfig.addFilter("displayDate", (date) => {
     const d = new Date(date);
@@ -56,26 +43,22 @@ export default function (eleventyConfig) {
     return `${d.getUTCFullYear()}.${pad(d.getUTCMonth() + 1)}.${pad(d.getUTCDate())}`;
   });
 
-  // 記事のURL用に 2026/10 の形式に
   eleventyConfig.addFilter("yearMonthPath", (date) => {
     const d = new Date(date);
     return `${d.getUTCFullYear()}/${String(d.getUTCMonth() + 1).padStart(2, "0")}`;
   });
 
-  // 記事の最初の段落を抜粋として取り出す
   eleventyConfig.addFilter("excerpt", (html = "") => {
     const firstParagraph = html.match(/<p>([\s\S]*?)<\/p>/);
     return firstParagraph ? firstParagraph[1].replace(/<[^>]+>/g, "").trim() : "";
   });
 
-  // タグの一覧から、内部用の "posts" タグを取り除く
+  // "posts" は記事一覧を作るための内部用タグなので表示しない
   eleventyConfig.addFilter("displayTags", (tags = []) =>
     tags.filter((tag) => tag !== "posts")
   );
 
-  // ---------- キャッシュ対策 ----------
-  // ファイルの中身からハッシュ値を作る。中身が変わると値も変わるので、
-  // /css/blog.css?v=ハッシュ値 のように付ければ、ブラウザが古いキャッシュを使わなくなる
+  // 中身が変わると URL も変わるようにして、ブラウザに古いキャッシュを使わせない
   const hashCache = new Map();
   eleventyConfig.on("eleventy.before", () => hashCache.clear()); // npm start 中の再ビルドに対応
   eleventyConfig.addFilter("withHash", (urlPath) => {
@@ -86,8 +69,6 @@ export default function (eleventyConfig) {
     return `${urlPath}?v=${hashCache.get(urlPath)}`;
   });
 
-  // ---------- タグ ----------
-  // タグ名 → URL に使える文字列（例：「学習 メモ」→「学習-メモ」）
   // 🔐 「../」や「/」が入ったタグで、意図しない場所にページが作られないように記号を取り除く
   const tagSlug = (tag) =>
     String(tag)
@@ -99,7 +80,6 @@ export default function (eleventyConfig) {
       .replace(/^-|-$/g, "");
   eleventyConfig.addFilter("tagSlug", tagSlug);
 
-  // 全記事のタグを集めて「タグ名・件数・URL用の文字列」の一覧を作る（件数の多い順）
   eleventyConfig.addCollection("tagList", (collectionApi) => {
     const counts = new Map();
     for (const post of collectionApi.getFilteredByTag("posts")) {
@@ -109,7 +89,6 @@ export default function (eleventyConfig) {
       }
     }
     const list = [...counts].map(([name, count]) => ({ name, count, slug: tagSlug(name) }));
-    // 記号だけのタグなど、URL にできないものは除外し、同じ URL になるタグがあればビルドを止める
     const seen = new Map();
     for (const tag of list) {
       if (!tag.slug) throw new Error(`タグ「${tag.name}」は URL にできる文字を含んでいません`);
@@ -129,7 +108,6 @@ export default function (eleventyConfig) {
       data: "_data",
       output: "_site",
     },
-    // Markdown・HTML の中では Liquid が使える（Jekyll と同じ書き方）
     markdownTemplateEngine: "liquid",
     htmlTemplateEngine: "liquid",
   };

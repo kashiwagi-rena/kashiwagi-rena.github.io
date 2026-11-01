@@ -1,15 +1,10 @@
-// =========================================================
-// 月単位のカレンダー
-//   静的サイトはビルドした時点の HTML しか持てないので、
-//   「今日」に合わせた表示はブラウザ側（JavaScript）で作る
-// =========================================================
+// 静的サイトの HTML はビルドした時点で固まるので、「今日」に合わせた表示はブラウザ側で作る
 (() => {
   const body = document.querySelector("[data-calendar-body]");
   const title = document.getElementById("calendar-title");
   if (!body || !title) return;
 
   const today = new Date();
-  // 表示中の月（その月の1日で持つ）
   let current = new Date(today.getFullYear(), today.getMonth(), 1);
 
   const isSameDay = (a, b) =>
