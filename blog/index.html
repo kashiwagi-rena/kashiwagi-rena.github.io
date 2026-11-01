@@ -9,25 +9,15 @@ nav: blog
   <!-- RSS は <head> の link タグで RSSリーダーが自動検出できるので、画面にリンクは置かない -->
 </p>
 
+{% include "tag-nav.html", currentTag: "" %}
+
 {% assign posts = collections.posts | reverse %}
 {% if posts.size == 0 %}
 <p>まだ記事がありません。</p>
 {% endif %}
 
 <ul class="post-list">
-  {% for post in posts %}
-  {% assign postTags = post.data.tags | displayTags %}
-  <li>
-    <a class="card post-card" href="{{ post.url | url }}">
-      <time class="post__date" datetime="{{ post.date | isoDate }}">{{ post.date | displayDate }}</time>
-      <h2 class="post-card__title">{{ post.data.title }}</h2>
-      <p class="post-card__excerpt">{{ post.content | excerpt | truncate: 100 }}</p>
-      {% if postTags.size > 0 %}
-      <ul class="tag-list">
-        {% for tag in postTags %}<li>{{ tag }}</li>{% endfor %}
-      </ul>
-      {% endif %}
-    </a>
-  </li>
-  {% endfor %}
+  {%- for post in posts %}
+  <li>{% include "post-card.html", post: post %}</li>
+  {%- endfor %}
 </ul>

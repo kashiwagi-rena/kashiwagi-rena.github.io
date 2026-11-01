@@ -9,14 +9,36 @@
   margin: 0;
 }
 .post-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
+  position: relative; /* タイトルのリンクをカード全体に広げる基準 */
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .post-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 40px rgba(79, 70, 229, 0.12);
+}
+.post-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+/* タイトルのリンクの当たり判定をカード全体に広げる（stretched link） */
+.post-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+}
+.post-card__link:focus-visible {
+  outline: none;
+}
+.post-card__link:focus-visible::after {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+/* タグのリンクだけを、広げたリンクより上に重ねて押せるようにする
+   （ul 全体を重ねると、タグの横の空白を押しても記事に飛べなくなる） */
+.post-card .tag-list li {
+  position: relative;
+  z-index: 1;
 }
 .post-card__title {
   margin: 4px 0 6px;
@@ -33,6 +55,64 @@
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.05em;
+}
+
+/* ---------- タグのリンク ---------- */
+.tag-list a {
+  color: inherit;
+  text-decoration: none;
+}
+.tag-list li:has(a):hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+.tag-list a::before {
+  content: "#";
+  opacity: 0.6;
+}
+
+/* ---------- タグのタブ ---------- */
+.tag-nav {
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+  /* タグが増えたら横スクロール（スマホで折り返しすぎないように） */
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.tag-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+.tag-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  border-bottom: 3px solid transparent;
+  color: var(--color-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+.tag-nav a:hover {
+  color: var(--color-accent);
+}
+.tag-nav a[aria-current="page"] {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+  font-weight: 600;
+}
+.tag-nav__count {
+  min-width: 1.6em;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--color-accent-soft);
+  color: var(--color-accent);
+  font-size: 12px;
+  text-align: center;
 }
 
 /* ---------- 記事本文 ---------- */
