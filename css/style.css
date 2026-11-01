@@ -402,6 +402,44 @@ a {
 
 /* ---------- スマホ対応 ---------- */
 @media (max-width: 640px) {
+  /* ヘッダー：1行目にロゴとボタン、2行目にメニュー（折り返さず横スクロール） */
+  .site-header {
+    position: static; /* 画面上部に固定しない（小さい画面で本文の表示領域を奪わないため） */
+  }
+  .site-header__inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px 0;
+  }
+  .site-nav {
+    grid-column: 1 / -1;
+    grid-row: 2; /* HTML の並び順に関係なく、メニューは必ず2行目 */
+    margin: 0 -16px; /* 横スクロールを画面の端まで広げる */
+    padding: 0 12px 8px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* スクロールバーは隠す（指でスワイプできる） */
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-nav a {
+    padding: 8px 12px; /* 指で押しやすい高さ（約40px）を確保 */
+  }
+  .btn-print {
+    padding: 6px 14px;
+    font-size: 13px;
+  }
+
+  .container {
+    padding: 20px 16px 48px;
+  }
+  .page-title {
+    font-size: 24px;
+  }
   .card {
     padding: 18px 16px;
   }
@@ -414,8 +452,5 @@ a {
   }
   .profile dl {
     grid-template-columns: 6em 1fr;
-  }
-  .site-nav {
-    margin-left: 0;
   }
 }
