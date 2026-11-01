@@ -21,10 +21,10 @@
   <meta property="og:locale" content="ja_JP">
   <!-- RSSリーダーが自動で見つけられるようにする -->
   <link rel="alternate" type="application/atom+xml" href="{{ '/feed.xml' | url }}" title="{{ site.title }}">
-  <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
-  <link rel="stylesheet" href="{{ '/css/blog.css' | url }}">
-  <link rel="stylesheet" href="{{ '/css/print.css' | url }}">
-  <script src="{{ '/js/main.js' | url }}" defer></script>
+  <link rel="stylesheet" href="{{ '/css/style.css' | withHash | url }}">
+  <link rel="stylesheet" href="{{ '/css/blog.css' | withHash | url }}">
+  <link rel="stylesheet" href="{{ '/css/print.css' | withHash | url }}">
+  <script src="{{ '/js/main.js' | withHash | url }}" defer></script>
 </head>
 <body>
   {% include "header.html" %}
