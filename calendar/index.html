@@ -1,0 +1,40 @@
+---
+layout: default.html
+title: カレンダー
+nav: calendar
+---
+<!-- カレンダー専用のスタイル（このページだけで使う） -->
+<link rel="stylesheet" href="{{ '/css/calendar.css' | url }}">
+
+<h1 class="page-title">Calendar</h1>
+
+<section class="card calendar" aria-labelledby="calendar-title">
+  <div class="calendar__head">
+    <button class="calendar__nav" type="button" data-calendar-move="-1" aria-label="前の月">‹</button>
+    <h2 class="calendar__title" id="calendar-title" aria-live="polite">&nbsp;</h2>
+    <button class="calendar__nav" type="button" data-calendar-move="1" aria-label="次の月">›</button>
+  </div>
+  <button class="calendar__today" type="button" data-calendar-today>今月</button>
+
+  <table class="calendar__table">
+    <thead>
+      <tr>
+        <th scope="col" class="is-sun" abbr="日曜日">日</th>
+        <th scope="col" abbr="月曜日">月</th>
+        <th scope="col" abbr="火曜日">火</th>
+        <th scope="col" abbr="水曜日">水</th>
+        <th scope="col" abbr="木曜日">木</th>
+        <th scope="col" abbr="金曜日">金</th>
+        <th scope="col" class="is-sat" abbr="土曜日">土</th>
+      </tr>
+    </thead>
+    <!-- 日付は js/calendar.js が表示している月に合わせて作る -->
+    <tbody data-calendar-body></tbody>
+  </table>
+
+  <noscript>
+    <p>カレンダーを表示するには JavaScript を有効にしてください。</p>
+  </noscript>
+</section>
+
+<script src="{{ '/js/calendar.js' | url }}" defer></script>
