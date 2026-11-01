@@ -9,12 +9,17 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/print.css">
   <script src="js/main.js" defer></script>
+  <!-- JavaScript が無効なときは、ハンバーガーメニューを使わずメニューを常に表示する -->
+  <noscript><style>.site-nav { display: flex !important; } .menu-toggle { display: none !important; }</style></noscript>
 </head>
 <body>
   <header class="site-header">
     <div class="site-header__inner">
       <a class="site-header__logo" href="index.html">Resume<span>.</span></a>
-      <nav class="site-nav" aria-label="メイン">
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="メニューを開く" data-menu-toggle>
+        <span class="menu-toggle__bar" aria-hidden="true"></span>
+      </button>
+      <nav class="site-nav" id="site-nav" aria-label="メイン">
         <a href="rirekisho.html">履歴書</a>
         <a href="shokumu.html" aria-current="page">職務経歴書</a>
         <a href="blog/">ブログ</a>

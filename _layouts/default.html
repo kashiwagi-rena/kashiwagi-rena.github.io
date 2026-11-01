@@ -25,6 +25,8 @@
   <link rel="stylesheet" href="{{ '/css/blog.css' | withHash | url }}">
   <link rel="stylesheet" href="{{ '/css/print.css' | withHash | url }}">
   <script src="{{ '/js/main.js' | withHash | url }}" defer></script>
+  <!-- JavaScript が無効なときは、ハンバーガーメニューを使わずメニューを常に表示する -->
+  <noscript><style>.site-nav { display: flex !important; } .menu-toggle { display: none !important; }</style></noscript>
 </head>
 <body>
   {% include "header.html" %}

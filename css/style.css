@@ -86,6 +86,64 @@ a {
   background: var(--color-accent-soft);
   color: var(--color-accent);
 }
+.menu-toggle {
+  display: none; /* PC では表示しない（スマホ用） */
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.menu-toggle:hover {
+  background: var(--color-accent-soft);
+}
+/* 3本線（≡）：真ん中の線を本体、上下の線を ::before / ::after で描く */
+.menu-toggle__bar,
+.menu-toggle__bar::before,
+.menu-toggle__bar::after {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: transform 0.2s, background-color 0.2s;
+}
+.menu-toggle__bar {
+  position: relative;
+}
+.menu-toggle__bar::before,
+.menu-toggle__bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+.menu-toggle__bar::before {
+  top: -7px;
+}
+.menu-toggle__bar::after {
+  top: 7px;
+}
+/* 開いているときは × にする */
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar {
+  background: transparent;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle__bar::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .menu-toggle__bar,
+  .menu-toggle__bar::before,
+  .menu-toggle__bar::after {
+    transition: none;
+  }
+}
+
 .btn-print {
   border: 0;
   border-radius: 999px;
@@ -402,32 +460,41 @@ a {
 
 /* ---------- スマホ対応 ---------- */
 @media (max-width: 640px) {
-  /* ヘッダー：1行目にロゴとボタン、2行目にメニュー（折り返さず横スクロール） */
-  .site-header {
-    position: static; /* 画面上部に固定しない（小さい画面で本文の表示領域を奪わないため） */
-  }
+  /* ヘッダー：1行にロゴ・（PDFボタン）・ハンバーガー。メニューはボタンで開閉する
+     1行に収まって低くなったので、PCと同じく画面上部に固定したままにする */
   .site-header__inner {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
     align-items: center;
     gap: 8px;
-    padding: 10px 16px 0;
+    padding: 8px 12px 8px 16px;
+  }
+  .btn-print {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .menu-toggle {
+    display: inline-grid;
+    grid-column: 3;
+    grid-row: 1;
   }
   .site-nav {
+    display: none; /* 閉じている間は非表示（スクリーンリーダーからも隠れる） */
     grid-column: 1 / -1;
     grid-row: 2; /* HTML の並び順に関係なく、メニューは必ず2行目 */
-    margin: 0 -16px; /* 横スクロールを画面の端まで広げる */
-    padding: 0 12px 8px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none; /* スクロールバーは隠す（指でスワイプできる） */
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 4px 0 8px;
+    border-top: 1px solid var(--color-border);
   }
-  .site-nav::-webkit-scrollbar {
-    display: none;
+  .site-header.is-menu-open .site-nav {
+    display: flex;
   }
   .site-nav a {
-    padding: 8px 12px; /* 指で押しやすい高さ（約40px）を確保 */
+    padding: 12px 14px; /* 指で押しやすい高さ（約48px）を確保 */
+    border-radius: 10px;
+    font-size: 15px;
   }
   .btn-print {
     padding: 6px 14px;

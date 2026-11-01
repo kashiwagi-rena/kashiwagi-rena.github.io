@@ -29,7 +29,7 @@
 | `css/style.css` | 画面用スタイル（色は `:root` の変数で変更できます） |
 | `css/blog.css` | ブログ用スタイル |
 | `css/print.css` | 印刷用スタイル（A4） |
-| `js/main.js` | 「PDFで保存」ボタンの処理 |
+| `js/main.js` | 「PDFで保存」ボタン・スマホのハンバーガーメニューの処理 |
 
 ## CSS・JS のキャッシュ対策
 
