@@ -1,5 +1,4 @@
-# Action や npm パッケージのバージョンを、月に1回自動でチェックして更新の PR を作ってくれる
-# （SHA で固定したバージョンを手で追いかけなくてよくなる）
+# SHA で固定した Action のバージョンを、手で追いかけなくてよくするため
 version: 2
 updates:
   - package-ecosystem: github-actions

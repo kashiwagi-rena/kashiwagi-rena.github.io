@@ -12,14 +12,12 @@
   <title>{{ pageTitle }}</title>
   <meta name="description" content="{{ pageDescription }}">
   <link rel="canonical" href="{{ site.url }}{{ page.url }}">
-  <!-- SNS でシェアしたときのカード表示（OGP） -->
   <meta property="og:title" content="{{ pageTitle }}">
   <meta property="og:description" content="{{ pageDescription }}">
   <meta property="og:url" content="{{ site.url }}{{ page.url }}">
   <meta property="og:site_name" content="{{ site.title }}">
   <meta property="og:type" content="{% if layout == 'post.html' %}article{% else %}website{% endif %}">
   <meta property="og:locale" content="ja_JP">
-  <!-- RSSリーダーが自動で見つけられるようにする -->
   <link rel="alternate" type="application/atom+xml" href="{{ '/feed.xml' | url }}" title="{{ site.title }}">
   <link rel="stylesheet" href="{{ '/css/style.css' | withHash | url }}">
   <link rel="stylesheet" href="{{ '/css/blog.css' | withHash | url }}">

@@ -3,7 +3,6 @@ layout: default.html
 title: カレンダー
 nav: calendar
 ---
-<!-- カレンダー専用のスタイル（このページだけで使う） -->
 <link rel="stylesheet" href="{{ '/css/calendar.css' | url }}">
 
 <h1 class="page-title">Calendar</h1>
@@ -28,7 +27,6 @@ nav: calendar
         <th scope="col" class="is-sat" abbr="土曜日">土</th>
       </tr>
     </thead>
-    <!-- 日付は js/calendar.js が表示している月に合わせて作る -->
     <tbody data-calendar-body></tbody>
   </table>
 
