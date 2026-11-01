@@ -19,6 +19,9 @@
 | `rirekisho.html` | 履歴書 |
 | `shokumu.html` | 職務経歴書 |
 | `blog/index.html` | ブログの記事一覧 |
+| `calendar/index.html` | カレンダー（月単位の表） |
+| `js/calendar.js` | カレンダーの日付を作る処理 |
+| `css/calendar.css` | カレンダー用スタイル |
 | `blog/tags.html` | タグごとの記事一覧（タグの数だけページを自動生成） |
 | `_posts/` | ブログ記事（Markdown） |
 | `_posts/_posts.json` | 記事全体に共通の設定（レイアウト・URLの形） |
