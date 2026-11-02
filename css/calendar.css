@@ -228,6 +228,38 @@
   font-weight: 700;
   margin-right: 2px;
 }
+.exercise__backup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.exercise__backup-button {
+  padding: 8px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.exercise__backup-button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+/* ファイル選択の input は見た目を label に任せるが、キーボード操作はできるようにしておく */
+.exercise__backup-button:focus-within {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
 .exercise__note {
   margin: 20px 0 0;
   padding: 10px 14px;

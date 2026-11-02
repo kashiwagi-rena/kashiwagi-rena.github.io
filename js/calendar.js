@@ -203,6 +203,81 @@
     render();
   });
 
+  // ---------- CSV のバックアップ ----------
+  // ブラウザはセキュリティのため端末のファイルに直接書き込めないので、ダウンロードと読み込みで受け渡す
+  const CSV_HEADER = ["日付", ...Object.values(ACTIVITIES).map((a) => a.label)];
+  const MAX_CSV_BYTES = 1024 * 1024;
+  const csvMessage = document.querySelector("[data-csv-message]");
+
+  document.querySelector("[data-csv-export]")?.addEventListener("click", () => {
+    const lines = [CSV_HEADER.join(",")];
+    for (const date of Object.keys(log).sort()) {
+      lines.push([date, ...Object.keys(ACTIVITIES).map((id) => (log[date].includes(id) ? 1 : 0))].join(","));
+    }
+    // BOM を付けないと、Excel で開いたときに日本語の見出しが文字化けする
+    const blob = new Blob(["﻿" + lines.join("\r\n") + "\r\n"], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `exercise-log-${todayKey}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+    csvMessage.textContent = `${lines.length - 1}日分の記録を書き出しました。`;
+  });
+
+  // 🔐 読み込むファイルは中身を信用せず、1行ずつ形を確かめてから取り込む
+  const parseCsv = (text) => {
+    const rows = text.replace(/^﻿/, "").split(/\r?\n/).filter((line) => line.trim() !== "");
+    const header = rows.shift()?.split(",").map((cell) => cell.trim());
+    if (header?.join(",") !== CSV_HEADER.join(",")) {
+      throw new Error(`1行目が「${CSV_HEADER.join(",")}」になっていません。このページで書き出したCSVを選んでください。`);
+    }
+    const imported = {};
+    let skipped = 0;
+    for (const row of rows) {
+      const [date, ...flags] = row.split(",").map((cell) => cell.trim());
+      const valid =
+        /^\d{4}-\d{2}-\d{2}$/.test(date) &&
+        date <= todayKey &&
+        flags.length === Object.keys(ACTIVITIES).length &&
+        flags.every((flag) => flag === "0" || flag === "1");
+      if (!valid) {
+        skipped++;
+        continue;
+      }
+      const done = Object.keys(ACTIVITIES).filter((_, i) => flags[i] === "1");
+      if (done.length > 0) imported[date] = done;
+    }
+    return { imported, skipped };
+  };
+
+  document.querySelector("[data-csv-import]")?.addEventListener("change", async (event) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+    // 同じファイルをもう一度選んでも change が起きるように、選択をリセットしておく
+    input.value = "";
+    if (!file) return;
+
+    if (file.size > MAX_CSV_BYTES) {
+      csvMessage.textContent = "ファイルが大きすぎます（1MBまで）。";
+      return;
+    }
+    try {
+      const { imported, skipped } = parseCsv(await file.text());
+      // 今の記録を消さないよう、上書きではなく合わせる（同じ日は両方の運動を残す）
+      for (const [date, done] of Object.entries(imported)) {
+        log[date] = [...new Set([...(log[date] ?? []), ...done])];
+      }
+      const saved = saveLog();
+      render();
+      csvMessage.textContent = saved
+        ? `${Object.keys(imported).length}日分の記録を読み込みました。${skipped > 0 ? `読み込めない${skipped}行（形式の誤り・未来の日付）は読み飛ばしました。` : ""}`
+        : "読み込んだ記録を保存できませんでした。";
+    } catch (error) {
+      csvMessage.textContent = error instanceof Error ? error.message : "読み込みに失敗しました。";
+    }
+  });
+
   document.querySelectorAll("[data-calendar-move]").forEach((button) => {
     button.addEventListener("click", () => {
       const step = Number(button.dataset.calendarMove);
