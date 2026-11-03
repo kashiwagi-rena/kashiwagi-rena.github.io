@@ -16,6 +16,9 @@ eleventyComputed:
 {% include "tag-nav.html", currentTag: tag.name %}
 
 {% assign posts = collections[tag.name] | reverse %}
+{% if tag.count == 0 %}
+<p>まだ記事がありません。</p>
+{% endif %}
 <ul class="post-list">
   {%- for post in posts %}
   <li>{% include "post-card.html", post: post %}</li>

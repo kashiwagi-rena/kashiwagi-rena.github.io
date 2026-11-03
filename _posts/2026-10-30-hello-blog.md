@@ -1,6 +1,6 @@
 ---
 title: ブログをはじめました
-tags: [お知らせ, Eleventy]
+tags: [技術系]
 # はてなブログから転載する記事は、元のURLを書くと記事の最後にリンクが出ます
 # original_url: https://example.hatenablog.com/entry/2026/10/30/000000
 ---
@@ -17,11 +17,12 @@ _posts/YYYY-MM-DD-英数字のタイトル.md
 ```
 
 ファイルの先頭には、`---` で囲んだ **Front Matter**（記事の設定）を書きます。
+`tags` に使えるラベルは「備忘録」「技術系」「日記」「読書メモ」の4つです。
 
 ```yaml
 ---
 title: 記事のタイトル
-tags: [JavaScript, 学習メモ]
+tags: [備忘録, 技術系]
 ---
 ```
 
