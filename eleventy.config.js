@@ -2,6 +2,7 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import labels from "./_data/labels.js";
 import site from "./_data/site.js";
 
 export default function (eleventyConfig) {
@@ -81,23 +82,20 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("tagSlug", tagSlug);
 
   eleventyConfig.addCollection("tagList", (collectionApi) => {
-    const counts = new Map();
+    const counts = new Map(labels.map((label) => [label, 0]));
     for (const post of collectionApi.getFilteredByTag("posts")) {
       for (const tag of post.data.tags || []) {
         if (tag === "posts") continue;
-        counts.set(tag, (counts.get(tag) || 0) + 1);
+        if (!counts.has(tag)) {
+          throw new Error(
+            `${post.inputPath}：ラベル「${tag}」は使えません。使えるのは ${labels.join("・")} です（_data/labels.js）`
+          );
+        }
+        counts.set(tag, counts.get(tag) + 1);
       }
     }
-    const list = [...counts].map(([name, count]) => ({ name, count, slug: tagSlug(name) }));
-    const seen = new Map();
-    for (const tag of list) {
-      if (!tag.slug) throw new Error(`タグ「${tag.name}」は URL にできる文字を含んでいません`);
-      if (seen.has(tag.slug)) {
-        throw new Error(`タグ「${seen.get(tag.slug)}」と「${tag.name}」が同じ URL になります`);
-      }
-      seen.set(tag.slug, tag.name);
-    }
-    return list.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "ja"));
+    // 件数が0のラベルもタブに出すため、並び順は labels.js の順に固定する
+    return labels.map((name) => ({ name, count: counts.get(name), slug: tagSlug(name) }));
   });
 
   return {
