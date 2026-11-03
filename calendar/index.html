@@ -3,7 +3,7 @@ layout: default.html
 title: カレンダー
 nav: calendar
 ---
-<link rel="stylesheet" href="{{ '/css/calendar.css' | url }}">
+<link rel="stylesheet" href="{{ '/css/calendar.css' | withHash | url }}">
 
 <h1 class="page-title">Calendar</h1>
 
@@ -35,4 +35,44 @@ nav: calendar
   </noscript>
 </section>
 
-<script src="{{ '/js/calendar.js' | url }}" defer></script>
+<section class="card exercise" aria-labelledby="exercise-title" data-exercise hidden>
+  <h2 class="exercise__title" id="exercise-title">&nbsp;</h2>
+
+  <div class="exercise__buttons">
+    <button class="exercise__button" type="button" aria-pressed="false" data-activity="pilates">
+      <span class="exercise__icon" aria-hidden="true">🧘</span>ピラティス
+    </button>
+    <button class="exercise__button" type="button" aria-pressed="false" data-activity="run">
+      <span class="exercise__icon" aria-hidden="true">🏃</span>ランニング
+    </button>
+    <button class="exercise__button" type="button" aria-pressed="false" data-activity="walk">
+      <span class="exercise__icon" aria-hidden="true">🚶</span>ウォーキング
+    </button>
+  </div>
+  <p class="exercise__hint" data-exercise-hint></p>
+
+  <h3 class="exercise__subtitle" data-summary-title>&nbsp;</h3>
+  <dl class="exercise__summary">
+    <div><dt>🧘 ピラティス</dt><dd><span data-count="pilates">0</span>回</dd></div>
+    <div><dt>🏃 ランニング</dt><dd><span data-count="run">0</span>回</dd></div>
+    <div><dt>🚶 ウォーキング</dt><dd><span data-count="walk">0</span>日</dd></div>
+  </dl>
+
+  <h3 class="exercise__subtitle">バックアップ（CSV）</h3>
+  <div class="exercise__backup">
+    <button class="exercise__backup-button" type="button" data-csv-export>CSVに書き出す</button>
+    <label class="exercise__backup-button">
+      CSVから読み込む
+      <input class="visually-hidden" type="file" accept=".csv,text/csv" data-csv-import>
+    </label>
+  </div>
+  <p class="exercise__hint" data-csv-message role="status"></p>
+
+  <p class="exercise__note">
+    記録はこの端末のこのブラウザにだけ保存されます（サーバーには送信されません）。
+    別の端末とは共有されず、ブラウザのデータを消すと記録も消えます。
+    ときどき「CSVに書き出す」でバックアップを取ってください。
+  </p>
+</section>
+
+<script src="{{ '/js/calendar.js' | withHash | url }}" defer></script>

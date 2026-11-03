@@ -4,6 +4,9 @@ private/
 
 *.local.html
 
+# 運動の記録のバックアップなど、書き出したCSV
+*.csv
+
 # 提出用に書き出したPDFや写真
 *.pdf
 *.jpg

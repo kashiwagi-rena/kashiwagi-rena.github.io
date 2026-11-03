@@ -1,6 +1,6 @@
 .calendar {
   max-width: 720px;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   position: relative;
 }
 .calendar__head {
@@ -62,10 +62,31 @@
 }
 .calendar__table td {
   height: 72px;
-  padding: 6px;
+  padding: 0;
   vertical-align: top;
   border: 1px solid var(--color-border);
   font-size: 14px;
+}
+.calendar__day {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.calendar__day:hover {
+  background: var(--color-accent-soft);
+}
+.calendar__day:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
 }
 .calendar__table time {
   display: inline-grid;
@@ -73,6 +94,35 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
+}
+.calendar td.is-selected {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+.calendar__marks {
+  display: flex;
+  gap: 3px;
+  padding-left: 4px;
+}
+.calendar__mark {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+/* 運動ごとの色（ボタン・カレンダーの点・合計で共通） */
+.calendar__mark--pilates,
+.exercise__button[data-activity="pilates"] {
+  --activity-color: #db2777;
+}
+.calendar__mark--run,
+.exercise__button[data-activity="run"] {
+  --activity-color: #ea580c;
+}
+.calendar__mark--walk,
+.exercise__button[data-activity="walk"] {
+  --activity-color: #059669;
+}
+.calendar__mark {
+  background: var(--activity-color);
 }
 
 .calendar .is-sun {
@@ -91,6 +141,134 @@
   font-weight: 700;
 }
 
+/* ---------- 運動の記録 ---------- */
+.exercise {
+  max-width: 720px;
+  margin: 0 auto 20px;
+}
+.exercise[hidden] {
+  display: none;
+}
+.exercise__title {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+.exercise__buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.exercise__button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.exercise__button:hover:not(:disabled) {
+  border-color: var(--activity-color);
+}
+.exercise__button[aria-pressed="true"] {
+  border-color: var(--activity-color);
+  background: var(--activity-color);
+  color: #fff;
+}
+.exercise__button[aria-pressed="true"]::after {
+  content: "✓ 記録済み";
+  font-size: 12px;
+  font-weight: 400;
+}
+.exercise__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.exercise__icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.exercise__hint {
+  margin: 10px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.exercise__subtitle {
+  margin: 24px 0 8px;
+  font-size: 15px;
+}
+.exercise__summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin: 0;
+}
+.exercise__summary div {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--color-bg);
+}
+.exercise__summary dt {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.exercise__summary dd {
+  margin: 0;
+  font-size: 13px;
+}
+.exercise__summary dd span {
+  font-size: 22px;
+  font-weight: 700;
+  margin-right: 2px;
+}
+.exercise__backup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.exercise__backup-button {
+  padding: 8px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.exercise__backup-button:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+/* ファイル選択の input は見た目を label に任せるが、キーボード操作はできるようにしておく */
+.exercise__backup-button:focus-within {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.exercise__note {
+  margin: 20px 0 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
 @media (max-width: 640px) {
   .calendar {
     padding: 16px 8px;
@@ -101,8 +279,33 @@
     margin: 0 auto 12px;
   }
   .calendar__table td {
-    height: 52px;
-    padding: 4px 2px;
+    height: 56px;
+  }
+  .calendar__day {
+    align-items: center;
+    padding: 4px 0;
+  }
+  .calendar__marks {
+    padding-left: 0;
+  }
+  .calendar__mark {
+    width: 6px;
+    height: 6px;
+  }
+  .exercise {
+    padding: 18px 12px;
+  }
+  .exercise__button {
+    padding: 12px 4px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .exercise__summary div {
+    padding: 8px 6px;
     text-align: center;
+  }
+  .exercise__summary dt {
+    font-size: 11px;
+    white-space: nowrap;
   }
 }
