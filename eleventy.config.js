@@ -2,11 +2,13 @@ import { feedPlugin } from "@11ty/eleventy-plugin-rss";
 import syntaxHighlight from "@11ty/eleventy-plugin-syntaxhighlight";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
+import linkcard from "./_config/linkcard.js";
 import labels from "./_data/labels.js";
 import site from "./_data/site.js";
 
 export default function (eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(linkcard);
 
   eleventyConfig.addPlugin(feedPlugin, {
     type: "atom",
