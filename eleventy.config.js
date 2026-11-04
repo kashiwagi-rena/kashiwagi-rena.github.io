@@ -86,15 +86,20 @@ export default function (eleventyConfig) {
   eleventyConfig.addCollection("tagList", (collectionApi) => {
     const counts = new Map(labels.map((label) => [label, 0]));
     for (const post of collectionApi.getFilteredByTag("posts")) {
-      for (const tag of post.data.tags || []) {
-        if (tag === "posts") continue;
-        if (!counts.has(tag)) {
-          throw new Error(
-            `${post.inputPath}：ラベル「${tag}」は使えません。使えるのは ${labels.join("・")} です（_data/labels.js）`
-          );
-        }
-        counts.set(tag, counts.get(tag) + 1);
+      const postLabels = (post.data.tags || []).filter((tag) => tag !== "posts");
+      // ラベルは記事の「種類」なので、1記事に1つだけにする（タブの件数の合計が記事数と一致する）
+      if (postLabels.length !== 1) {
+        throw new Error(
+          `${post.inputPath}：ラベルは1つだけ付けてください（今は ${postLabels.length} 個：${postLabels.join("・") || "なし"}）`
+        );
       }
+      const [label] = postLabels;
+      if (!counts.has(label)) {
+        throw new Error(
+          `${post.inputPath}：ラベル「${label}」は使えません。使えるのは ${labels.join("・")} です（_data/labels.js）`
+        );
+      }
+      counts.set(label, counts.get(label) + 1);
     }
     // 件数が0のラベルもタブに出すため、並び順は labels.js の順に固定する
     return labels.map((name) => ({ name, count: counts.get(name), slug: tagSlug(name) }));
