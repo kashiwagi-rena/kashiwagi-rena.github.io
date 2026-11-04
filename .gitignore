@@ -20,6 +20,8 @@ private/
 
 # ビルド結果（CI で毎回作り直すので不要）
 _site/
+# リンクカード用に取得した外部ページのキャッシュ
+.cache/
 
 # npm でインストールしたパッケージ（package-lock.json から再現できる）
 node_modules/
