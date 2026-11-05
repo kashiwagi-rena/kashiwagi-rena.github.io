@@ -33,6 +33,8 @@ export default function (eleventyConfig) {
 
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("private/**");
+  eleventyConfig.ignores.add("kpt-templates/**");
+  eleventyConfig.ignores.add("scripts/**");
   // 単体HTMLはテンプレートとして処理せず、上の addPassthroughCopy でそのままコピーする
   eleventyConfig.ignores.add("rirekisho.html");
   eleventyConfig.ignores.add("shokumu.html");
@@ -55,6 +57,16 @@ export default function (eleventyConfig) {
     const firstParagraph = html.match(/<p>([\s\S]*?)<\/p>/);
     return firstParagraph ? firstParagraph[1].replace(/<[^>]+>/g, "").trim() : "";
   });
+
+  // KPT は箇条書きで書くことが多いので、段落に限らず見出し以外の本文の先頭を抜粋にする
+  eleventyConfig.addFilter("kptExcerpt", (html = "") =>
+    html
+      .replace(/<h2[^>]*>[\s\S]*?<\/h2>/g, " ")
+      .replace(/<\/(?:li|p|ul|ol|blockquote|pre)>/g, " ")
+      .replace(/<[^>]+>/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+  );
 
   // "posts" は記事一覧を作るための内部用タグなので表示しない
   eleventyConfig.addFilter("displayTags", (tags = []) =>
