@@ -1,0 +1,75 @@
+name: KPT を公開
+
+on:
+  issues:
+    types: [opened, edited, labeled]
+
+permissions:
+  contents: read
+
+# 同時に2つ投稿しても、push がぶつからないよう1つずつ処理する
+concurrency:
+  group: kpt-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # 🔐 public リポジトリの Issue は誰でも作れるので、持ち主が kpt ラベル付きで書いたものだけを扱う
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      github.event.sender.login == github.repository_owner &&
+      contains(github.event.issue.labels.*.name, 'kpt')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 記事を commit するため
+      issues: write # 公開したら Issue にコメントして閉じるため
+      actions: write # デプロイのワークフローを起動するため
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Issue を記事に変換
+        id: convert
+        run: node scripts/kpt-from-issue.mjs
+
+      - name: commit して push
+        if: steps.convert.outputs.published == 'true'
+        id: commit
+        env:
+          KPT_PATH: ${{ steps.convert.outputs.path }}
+          KPT_DATE: ${{ steps.convert.outputs.date }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$KPT_PATH"
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git commit -m "KPT: $KPT_DATE"
+          git pull --rebase origin main
+          git push origin HEAD:main
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # GITHUB_TOKEN での push は、ほかのワークフローを起動しない（無限ループ防止の仕様）。
+      # workflow_dispatch だけは例外なので、デプロイを明示的に起動する
+      - name: デプロイを起動
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ci-cd.yml --ref main
+
+      - name: Issue にコメントして閉じる
+        if: steps.convert.outputs.published == 'true' && github.event.action == 'opened'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          KPT_DATE: ${{ steps.convert.outputs.date }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body "公開しました（数分で反映されます）：https://${GITHUB_REPOSITORY_OWNER}.github.io/kpt/${KPT_DATE}/
+          直したいときは、この Issue を編集すると記事も更新されます。"
+          gh issue close "$ISSUE_NUMBER"

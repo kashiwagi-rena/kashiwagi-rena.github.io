@@ -1,0 +1,25 @@
+---
+layout: default.html
+---
+<article class="card post kpt-entry">
+  <header class="post__header">
+    <time class="post__date" datetime="{{ page.date | isoDate }}">{{ page.date | displayDate }}</time>
+    <h1 class="post__title">KPT</h1>
+  </header>
+
+  <div class="prose kpt-entry__body">
+    {{ content }}
+  </div>
+</article>
+
+{% assign previousEntry = collections.kpt | getPreviousCollectionItem: page %}
+{% assign nextEntry = collections.kpt | getNextCollectionItem: page %}
+<nav class="post-nav" aria-label="前後の日">
+  {% if previousEntry %}
+  <a class="post-nav__link" href="{{ previousEntry.url | url }}">← {{ previousEntry.date | displayDate }}</a>
+  {% else %}<span></span>{% endif %}
+  {% if nextEntry %}
+  <a class="post-nav__link post-nav__link--next" href="{{ nextEntry.url | url }}">{{ nextEntry.date | displayDate }} →</a>
+  {% endif %}
+</nav>
+<p><a href="{{ '/kpt/' | url }}">KPT一覧へ戻る</a></p>

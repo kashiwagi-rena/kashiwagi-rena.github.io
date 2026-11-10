@@ -1,0 +1,26 @@
+# 2026年11月のKPTテンプレート
+# 形式は GitHub の Issue フォーム：https://docs.github.com/ja/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-issue-forms
+name: KPT
+description: 今日の振り返り（Keep・Problem・Try）
+title: "KPT"
+labels: ["kpt"]
+body:
+  - type: input
+    attributes:
+      label: 日付
+      description: 空欄なら投稿した日（日本時間）になります。別の日の分は 2026-11-05 の形で書いてください
+      placeholder: "2026-11-05"
+  - type: textarea
+    attributes:
+      label: Keep
+      description: よかったこと・続けたいこと
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Problem
+      description: うまくいかなかったこと・困ったこと
+  - type: textarea
+    attributes:
+      label: Try
+      description: 次に試すこと
