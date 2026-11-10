@@ -1,0 +1,30 @@
+---
+layout: default.html
+title: KPT
+nav: kpt
+---
+<h1 class="page-title">KPT</h1>
+<p class="hero__lead" style="margin-bottom: 24px;">毎日の振り返り（Keep・Problem・Try）</p>
+
+{% assign entries = collections.kpt | reverse %}
+{% if entries.size == 0 %}
+<p>まだ記録がありません。</p>
+{% endif %}
+
+{% assign currentMonth = "" %}
+{%- for entry in entries %}
+  {%- assign month = entry.date | displayDate | slice: 0, 7 %}
+  {%- if month != currentMonth %}
+    {%- unless forloop.first %}</ul>{% endunless %}
+<h2 class="kpt-month">{{ month | replace: ".", "年" }}月</h2>
+<ul class="kpt-list">
+    {%- assign currentMonth = month %}
+  {%- endif %}
+  <li>
+    <a class="kpt-list__link" href="{{ entry.url | url }}">
+      <time datetime="{{ entry.date | isoDate }}">{{ entry.date | displayDate | slice: 5, 5 }}</time>
+      <span class="kpt-list__excerpt">{{ entry.content | kptExcerpt | truncate: 60 }}</span>
+    </a>
+  </li>
+  {%- if forloop.last %}</ul>{% endif %}
+{%- endfor %}
