@@ -1,0 +1,34 @@
+name: KPT テンプレートの月替わり
+
+on:
+  # 月初だけ動かすと、その日に GitHub 側の都合で実行されなかったときに1か月ずれるので、毎日確かめる
+  schedule:
+    - cron: "17 15 * * *" # 毎日 0:17（日本時間）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rotate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: 今月のテンプレートを反映
+        id: rotate
+        run: node scripts/kpt-rotate-template.mjs
+      - name: commit して push
+        if: steps.rotate.outputs.changed == 'true'
+        env:
+          MONTH: ${{ steps.rotate.outputs.month }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/ISSUE_TEMPLATE/kpt.yml
+          git commit -m "KPTテンプレートを ${MONTH} 版に切り替え"
+          git push origin HEAD:main

@@ -33,6 +33,8 @@ export default function (eleventyConfig) {
 
   eleventyConfig.ignores.add("README.md");
   eleventyConfig.ignores.add("private/**");
+  eleventyConfig.ignores.add("kpt-templates/**");
+  eleventyConfig.ignores.add("scripts/**");
   // 単体HTMLはテンプレートとして処理せず、上の addPassthroughCopy でそのままコピーする
   eleventyConfig.ignores.add("rirekisho.html");
   eleventyConfig.ignores.add("shokumu.html");
