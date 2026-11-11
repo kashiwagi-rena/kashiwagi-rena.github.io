@@ -37,19 +37,23 @@
     <section class="card">
       <h2 class="section-title">職務要約</h2>
       <p class="summary">
-        大学卒業後、株式会社サンプルにてWebアプリケーションエンジニアとしてX年間、
-        受託開発に従事。現在は株式会社エグザンプルにて自社サービスのフロントエンド開発を担当しています。
-        （ここは3〜5行で「何年・どんな領域で・何をしてきたか」をまとめます。採用担当者が最初に読む場所です）
+        栄養士・調理師として約6年勤務した後、2023年にエンジニアへ転身しました。<br>
+        アルサーガパートナーズでは、OpenAI APIを使った自社SaaSの開発に参加し、FastAPIでのAPI開発からテストまで一人称で担当しました。<br>
+        2024年10月から株式会社loadoffに在籍し、Nuxt.js・Express・AWS（Lambda／API Gateway／S3／CloudFront）を使って、フロントエンド・バックエンド・インフラの区別なく開発しています。<br>
+        SSR構成のサイトに動画アップロード機能を追加した際は、Lambda・API Gatewayの容量制限を避けるため、Presigned URLでS3へ直接アップロードする方式を採用し、設計からデプロイまで担当しました。<br>
+        2024年6月からは、RUNTEQで未経験者向けの講師も務めています。<br>
       </p>
     </section>
 
     <section class="card">
       <h2 class="section-title">活かせる経験・知識・技術</h2>
       <ul class="check-list">
-        <li>React / TypeScript を用いたSPAの設計・実装（X年）</li>
-        <li>REST API の設計とバックエンド実装（Ruby on Rails）</li>
-        <li>テストコード（Jest / RSpec）の整備によるリリース品質の向上</li>
-        <li>3〜5名チームでのコードレビュー・後輩育成</li>
+        <li>Nuxt.js / TypeScript を用いたフロントエンド開発（約2年）</li>
+        <li>Express / FastAPI による REST API の設計・実装（約1年）</li>
+        <li>AWS（Lambda / API Gateway / S3 / CloudFront）を用いたSSR環境での開発・運用、Presigned URL を使った動画アップロード機能の設計〜デプロイ</li>
+        <li>OpenAI API を用いた機能開発・プロンプト設計</li>
+        <li>PRテンプレート・静的解析環境の整備による、チームの開発効率の向上</li>
+        <li>未経験者向けの技術指導（RUNTEQ講師、約2年半）</li>
       </ul>
     </section>
 
@@ -59,62 +63,144 @@
       <!-- 会社ブロック（新しい会社を上に書く「逆編年体式」） -->
       <article class="company">
         <div class="company__head">
-          <h3 class="company__name">株式会社エグザンプル</h3>
-          <span class="company__period">20XX年X月 〜 現在</span>
+          <h3 class="company__name">株式会社loadoff</h3>
+          <span class="company__period">2024年10月 〜 現在</span>
         </div>
-        <p class="company__info">事業内容：SaaS開発・運営 ／ 従業員数：XXX名 ／ 雇用形態：正社員</p>
+        <p class="company__info">事業内容：受託開発・自社サービス開発 ／ 従業員数：【要確認】名 ／ 雇用形態：正社員</p>
 
         <div class="project">
           <div class="project__head">
-            <h4 class="project__title">自社SaaSの管理画面リニューアル</h4>
-            <span class="project__period">20XX年X月 〜 現在</span>
+            <h4 class="project__title">SSR構成Webサイトの開発・動画アップロード機能の追加</h4>
+            <span class="project__period">【要確認】 〜 【要確認】</span>
           </div>
           <div class="project__meta">
-            <span>役割：フロントエンドリード</span>
-            <span>規模：X名</span>
+            <span>役割：メンバー（フルスタック）</span>
+            <span>規模：【要確認】名</span>
           </div>
           <ul class="tag-list">
-            <li>React</li><li>TypeScript</li><li>Vite</li><li>Storybook</li>
+            <li>Nuxt.js</li><li>TypeScript</li><li>Express</li><li>AWS Lambda</li><li>API Gateway</li><li>S3</li><li>CloudFront</li>
           </ul>
           <h5>業務内容</h5>
           <ul>
-            <li>画面設計・コンポーネント設計</li>
-            <li>デザインシステムの構築</li>
+            <li>Lambda / API Gateway / CloudFront / S3 を用いたSSR環境での開発・運用</li>
+            <li>フロントエンド・バックエンド・インフラの区別なくタスクを担当</li>
+            <li>動画（MP4）アップロード機能の設計・実装・デプロイ</li>
           </ul>
           <h5>実績・工夫した点</h5>
           <ul>
-            <li>ページ表示速度を XX% 改善（数字で書けると説得力が上がります）</li>
+            <li>LambdaとAPI Gatewayのリクエストサイズ上限が課題になったため、Presigned URLでブラウザからS3へ直接アップロードする方式を採用し、設計からデプロイまで一貫して担当</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project__head">
+            <h4 class="project__title">映画前売り券サイトのフロントエンドリプレイス（受託）</h4>
+            <span class="project__period">2024年10月 〜 【要確認】</span>
+          </div>
+          <div class="project__meta">
+            <span>役割：メンバー（フルスタック）</span>
+            <span>規模：10名</span>
+          </div>
+          <ul class="tag-list">
+            <li>Nuxt.js</li><li>TypeScript</li><li>reCAPTCHA</li>
+          </ul>
+          <h5>業務内容</h5>
+          <ul>
+            <li>Nuxt.jsを用いたフロントエンド開発</li>
+            <li>reCAPTCHAの導入</li>
+            <li>URLのプレフィックス対応</li>
+          </ul>
+          <h5>実績・工夫した点</h5>
+          <ul>
+            <li>静的解析環境とPRテンプレートを整備し、チームメンバーが実装・レビューしやすい環境をつくった</li>
+          </ul>
+        </div>
+
+        <div class="project">
+          <div class="project__head">
+            <h4 class="project__title">toB向け水耕栽培サービスの開発（自社）</h4>
+            <span class="project__period">【要確認】 〜 【要確認】</span>
+          </div>
+          <div class="project__meta">
+            <span>役割：メンバー（フロントエンド）</span>
+            <span>規模：【要確認】名</span>
+          </div>
+          <ul class="tag-list">
+            <li>Next.js</li><li>TypeScript</li>
+          </ul>
+          <h5>業務内容</h5>
+          <ul>
+            <li>【要確認】</li>
+          </ul>
+          <h5>実績・工夫した点</h5>
+          <ul>
+            <li>【要確認】</li>
           </ul>
         </div>
       </article>
 
       <article class="company">
         <div class="company__head">
-          <h3 class="company__name">株式会社サンプル</h3>
-          <span class="company__period">20XX年X月 〜 20XX年X月</span>
+          <h3 class="company__name">株式会社スタートアップテクノロジー（RUNTEQ事業部）</h3>
+          <span class="company__period">2024年6月 〜 現在</span>
         </div>
-        <p class="company__info">事業内容：受託システム開発 ／ 従業員数：XXX名 ／ 雇用形態：正社員</p>
+        <p class="company__info">事業内容：プログラミングスクール運営 ／ 雇用形態：業務委託（副業）</p>
 
         <div class="project">
           <div class="project__head">
-            <h4 class="project__title">ECサイトの新規構築</h4>
-            <span class="project__period">20XX年X月 〜 20XX年X月</span>
+            <h4 class="project__title">未経験者向けプログラミングスクールの講師</h4>
+            <span class="project__period">2024年6月 〜 現在</span>
           </div>
           <div class="project__meta">
-            <span>役割：メンバー</span>
-            <span>規模：X名</span>
+            <span>役割：准講師</span>
           </div>
           <ul class="tag-list">
-            <li>Ruby on Rails</li><li>MySQL</li><li>AWS</li>
+            <li>Ruby on Rails</li><li>Git / GitHub</li>
           </ul>
           <h5>業務内容</h5>
           <ul>
-            <li>商品管理・注文機能のAPI実装</li>
-            <li>単体テスト・結合テスト</li>
+            <li>【要確認】（質問対応、コードレビュー、面談など）</li>
           </ul>
           <h5>実績・工夫した点</h5>
           <ul>
-            <li>N+1問題を解消し、一覧APIの応答時間を X秒 → X秒 に短縮</li>
+            <li>【要確認】</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="company">
+        <div class="company__head">
+          <h3 class="company__name">アルサーガパートナーズ株式会社</h3>
+          <span class="company__period">2023年11月 〜 2024年【要確認：4月 or 6月】</span>
+        </div>
+        <p class="company__info">事業内容：【要確認】 ／ 従業員数：【要確認】名 ／ 雇用形態：契約社員</p>
+
+        <div class="project">
+          <div class="project__head">
+            <h4 class="project__title">OpenAI APIを活用した自社SaaSの開発</h4>
+            <span class="project__period">2023年11月 〜 2024年【要確認】</span>
+          </div>
+          <div class="project__meta">
+            <span>役割：バックエンドエンジニア</span>
+            <span>規模：【要確認】名</span>
+          </div>
+          <ul class="tag-list">
+            <li>Python</li><li>FastAPI</li><li>OpenAI API</li><li>Flutter</li><li>Next.js</li><li>Swagger</li><li>Postman</li><li>Selenium</li>
+          </ul>
+          <h5>業務内容</h5>
+          <ul>
+            <li>FastAPIによるAPIの設計・実装（新規エンドポイントの作成）</li>
+            <li>OpenAI API向けのプロンプト設計・検証（Jupyterで検証と記録）</li>
+            <li>Flutter / Next.jsのバグ修正</li>
+            <li>テスター業務、Seleniumを使ったテストの作成</li>
+          </ul>
+          <h5>実績・工夫した点</h5>
+          <ul>
+            <li>要件定義から設計・テスト・運用まで、一人称で対応</li>
+            <li>禁止ワード機能を、設計から実装まで一貫して担当</li>
+            <li>SwaggerとPostmanを用いて、APIを3本設計・開発</li>
+            <li>ハードコーディングされていた箇所をリファクタリング</li>
+            <li>業務で得た知見をZenn記事・LTで社外に発信</li>
           </ul>
         </div>
       </article>
@@ -130,28 +216,44 @@
           <tbody>
             <!-- レベルは class="on" の数で表します（5段階） -->
             <tr>
-              <td>言語</td><td>TypeScript / JavaScript</td><td>X年</td>
-              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
-            </tr>
-            <tr>
-              <td>言語</td><td>Ruby</td><td>X年</td>
+              <td>言語</td><td>TypeScript / JavaScript</td><td>約2年</td>
               <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
             </tr>
             <tr>
-              <td>FW</td><td>React / Next.js</td><td>X年</td>
-              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
-            </tr>
-            <tr>
-              <td>DB</td><td>MySQL / PostgreSQL</td><td>X年</td>
+              <td>言語</td><td>Python</td><td>約7ヶ月</td>
               <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
             </tr>
             <tr>
-              <td>インフラ</td><td>AWS / Docker</td><td>X年</td>
+              <td>FW</td><td>Nuxt.js / Vue.js</td><td>約2年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>FW</td><td>Express</td><td>約3ヶ月</td>
               <td><span class="level" aria-label="5段階中2"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td>
             </tr>
             <tr>
-              <td>ツール</td><td>Git / GitHub</td><td>X年</td>
-              <td><span class="level" aria-label="5段階中4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></td>
+              <td>FW</td><td>FastAPI</td><td>約7ヶ月</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>FW</td><td>Next.js / Flutter</td><td>約7ヶ月</td>
+              <td><span class="level" aria-label="5段階中2"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>インフラ</td><td>AWS（Lambda / API Gateway / S3 / CloudFront）</td><td>約2年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>ツール</td><td>Git / GitHub</td><td>約3年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>ツール</td><td>Swagger / Postman</td><td>約7ヶ月</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
+            </tr>
+            <tr>
+              <td>AI</td><td>OpenAI API / 生成AIを使った開発</td><td>約3年</td>
+              <td><span class="level" aria-label="5段階中3"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></td>
             </tr>
           </tbody>
         </table>
@@ -162,18 +264,20 @@
     </section>
 
     <section class="card">
-      <h2 class="section-title">資格</h2>
-      <ul class="check-list">
-        <li>基本情報技術者試験（20XX年X月 合格）</li>
-      </ul>
-    </section>
-
-    <section class="card">
       <h2 class="section-title">自己PR</h2>
       <p class="summary">
-        【強みの見出し】<br>
-        強みを1つに絞り、それを裏付ける具体的なエピソード（状況→行動→結果）を書きます。
-        最後に、その強みを応募先でどう活かせるかで締めくくりましょう。
+        <strong>【領域にとらわれず、課題を解決する力】</strong><br>
+        現職では、フロントエンド・バックエンド・インフラの区別なくタスクを担当しています。SSR構成（Lambda / API Gateway / CloudFront）のサイトに動画アップロード機能を追加した際は、LambdaとAPI Gatewayのリクエストサイズ上限が課題になりました。そこで、Presigned URLを使ってブラウザからS3へ直接アップロードする方式を採用し、設計からデプロイまで一貫して担当しました。<br>
+        <br>
+        <strong>【困難な状況でも、周囲を見ながら仕事をやり遂げる力】</strong><br>
+        納期が迫り、チーム全体の負荷が高くなった時期も、感情的にならず落ち着いて自分の担当業務をやり遂げてきました。そのような状況でも、自分の作業だけに集中するのではなく、メンバーの進捗や困りごとに目を配り、手が回っていないタスクを引き受けたり、声をかけて状況を共有したりと、チームとして前に進めるよう動くことを意識しました。<br>
+        <br>
+        <strong>【学びを言語化し、周囲に還元する力】</strong><br>
+        2024年6月からRUNTEQで、未経験者への技術指導を続けています。また、OpenAI APIの活用についてLTでの登壇やZennでの記事執筆を行い、得た知見を発信してきました。現職でもPRテンプレートや静的解析環境を整備し、メンバーが開発しやすい環境づくりに取り組んでいます。<br>
+        ・Zenn記事：<a href="https://zenn.dev/arsaga/articles/e4c8e109624f9c" target="_blank" rel="noopener noreferrer">OpenAIのAPIをPython初心者でも簡単にできるJupyterで挙動確認してみよう！</a><br>
+        <br>
+        <strong>【今後の展望】</strong><br>
+        今後は、フロントエンドからインフラまで一貫して開発してきた経験を活かし、「何を作るか」の段階からプロダクトに関わりたいと考えています。将来的には、技術とユーザー視点の両方を持つPdMとして、ユーザーの課題を解決するプロダクトづくりに挑戦したいです。
       </p>
     </section>
 
