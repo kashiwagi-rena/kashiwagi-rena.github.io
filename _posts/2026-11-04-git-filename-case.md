@@ -1,6 +1,7 @@
 ---
 title: git管理のファイル名の大文字・小文字変更問題
 tags: [技術系]
+original_url: "https://a-nnmgmg8989.hatenablog.com/entry/2025/12/05/002229"
 ---
 
 ## ファイル名の大文字・小文字を間違えた時に見ること！
