@@ -7,7 +7,15 @@ import labels from "./_data/labels.js";
 import site from "./_data/site.js";
 
 export default function (eleventyConfig) {
-  eleventyConfig.addPlugin(syntaxHighlight);
+  eleventyConfig.addPlugin(syntaxHighlight, {
+    // 🔐 知らない言語名のコードブロックは、中身がエスケープされずに HTML として出力されてしまう（XSS になる）。
+    //    ビルドをエラーで止めて、必ず気づけるようにする
+    errorOnInvalidLanguage: true,
+    init({ Prism }) {
+      // Prism には Vue 用の定義がないので、HTML と同じ色付けにする
+      Prism.languages.vue = Prism.languages.markup;
+    },
+  });
   eleventyConfig.addPlugin(linkcard);
 
   eleventyConfig.addPlugin(feedPlugin, {
