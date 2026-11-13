@@ -22,7 +22,7 @@ layout: default.html
 
   {% if original_url %}
   <p class="post__original">
-    はてなブログから移行しました（<a href="{{ original_url }}" rel="noopener">元の記事</a>）
+    {{ original_site | default: "はてなブログ" }}から移行しました（<a href="{{ original_url }}" rel="noopener">元の記事</a>）
   </p>
   {% endif %}
 </article>
