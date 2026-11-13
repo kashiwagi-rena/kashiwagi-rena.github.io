@@ -151,6 +151,15 @@
   height: auto;
   border-radius: 8px;
 }
+.prose figure {
+  margin: 1.5em 0;
+  text-align: center;
+}
+.prose figcaption {
+  margin-top: 6px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
 .prose blockquote {
   margin: 1.5em 0;
   padding: 4px 18px;
