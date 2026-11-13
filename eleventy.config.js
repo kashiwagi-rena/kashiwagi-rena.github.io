@@ -73,6 +73,17 @@ export default function (eleventyConfig) {
     tags.filter((tag) => tag !== "posts")
   );
 
+  // 日付が未来の記事は、その日（日本時間の0時）になるまでページも一覧も作らない。
+  // 公開日になったら CI/CD の毎日のビルドで自動的に公開される（.github/workflows/ci-cd.yml の schedule）
+  // ⚠️ リポジトリは public なので、Markdown のファイル自体は GitHub で誰でも読める
+  const JST_OFFSET_MS = 9 * 60 * 60 * 1000;
+  eleventyConfig.addPreprocessor("scheduled-posts", "md", (data) => {
+    if (!data.page.inputPath.includes("/_posts/")) return;
+    // ファイル名の日付は UTC の 0 時として読まれるので、9時間引いて日本時間の 0 時にする
+    const publishAt = new Date(data.page.date).getTime() - JST_OFFSET_MS;
+    if (publishAt > Date.now()) return false;
+  });
+
   // 中身が変わると URL も変わるようにして、ブラウザに古いキャッシュを使わせない
   const hashCache = new Map();
   eleventyConfig.on("eleventy.before", () => hashCache.clear()); // npm start 中の再ビルドに対応
