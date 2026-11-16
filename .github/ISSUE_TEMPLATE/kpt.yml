@@ -28,7 +28,7 @@ body:
       label: 🔧 Problem（うまくいかなかったこと・モヤっとしたこと）
   - type: dropdown
     attributes:
-      label: 🚀 Try：あだちんさんのカリキュラム
+      label: 🚀 Try：カリキュラム
       options:
         - ✅ できた
         - ❌ できなかった
