@@ -56,8 +56,9 @@ const body = sections
   .map((s) => `## ${escapeHtml(s.label)}\n\n${escapeHtml(s.value)}`)
   .join("\n\n");
 
+const weekday = "日月火水木金土"[new Date(`${date}T00:00:00Z`).getUTCDay()];
 const content = `---
-title: ${yamlString(`${date} のKPT`)}
+title: ${yamlString(`ふりかえり - ${date.replaceAll("-", "/")}(${weekday})`)}
 date: ${date}
 issue: ${Number(issue.number)}
 ---
