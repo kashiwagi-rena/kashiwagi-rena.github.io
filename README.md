@@ -129,7 +129,7 @@ cp rirekisho.html shokumu.html private/
 
 # 2. private/ 内の HTML を自分の情報に書き換える
 
-# 3. ブラウザで private/rirekisho.html を開き「PDFで保存」→ 印刷ダイアログで「PDFに保存」
+# 3. ブラウザで private/rirekisho.html を開き、印刷（Mac: ⌘+P ／ Windows: Ctrl+P）→「PDFに保存」
 ```
 
 commit 前に `git status` を実行し、`private/` が表示されないことを確認する習慣をつけましょう。
